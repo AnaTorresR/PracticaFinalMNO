@@ -15,20 +15,25 @@
 
 ## Tareas a realizar para este primer avance 
 
-* El domingo 22 de noviembre:*
 
 - [X] Discutir el tema que deseamos implementar para este proyecto final
+
 - [X] Una vez decidido el tema nos dirigimos a buscar datos interesante con los cuales pudiéramos desarrollar un trabajo interesante
+
 - [X] Buscamos bibliografía del tema, así como del análisis de componentes principales, así como su implementación en R y en Python
 
 
 ## Tareas a realizar para el segundo avance 
 
 * Análisis exploratorio de la base de datos "cruda" 
+
 * Separar los datos por años `1990`, `1995` , `2000`, `2005`, `2010` y `2015`
+
 * Recrear el índice de marginación con los pesos obtenidos del análisis de componentes principales 
+
 * Comparar el índice obtenido de los componentes con el índice creado por el Consejo Nacional de Población (CONAPO)
 * Peportar resultados en un notebook 
+
 * Crear presentación  ¿?
 
 
@@ -44,9 +49,13 @@
 
 
 [Datos](http://www.conapo.gob.mx/es/CONAPO/Datos_Abiertos_del_Indice_de_Marginacion)
+
 [Diccionario de datos](https://www.gob.mx/cms/uploads/attachment/file/307289/Dicc_ent.pdf)
+
 [Concepto y dimensiones de la marginación](http://www.conapo.gob.mx/work/models/CONAPO/Resource/1755/1/images/01Capitulo.pdf)
+
 [Componentes principales en R](https://books.google.com.mx/books/about/Practical_Guide_To_Principal_Component_M.html?id=eFEyDwAAQBAJ&redir_esc=y)
+
 [Componentes principales en Python](https://towardsdatascience.com/pca-using-python-scikit-learn-e653f8989e60)
 
 
