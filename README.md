@@ -1,7 +1,7 @@
 # Practica Final : Análisis de componentes principales (PCA)
 
 * Profesor: Erick Palacios Moreno
-* Lenguaje a utilizar: 
+* Lenguaje a utilizar: Python
 
 ## Equipo
 
@@ -27,12 +27,12 @@
 
 - [X] Se analizó la base de datos, notamos que dos de los indicadores socioeconómicos tenían el mismo significado, por lo que decidimos eliminar aquella variable con mayor número de datos faltantes. 
 
-- [X] Una vez seleccionadas las variables con las que trabajaremos notamos que los datos contaban únicamente con 32 valores faltantes, decidimos imputar estos valores, [aquí el código]()
+- [X] Una vez seleccionadas las variables con las que trabajaremos notamos que los datos contaban únicamente con 32 valores faltantes, decidimos imputar estos valores con ayuda del lengiaje de programación `R`, [aquí el código]()
  
 
 ## Tareas a realizar para el segundo avance 
 
-* Análisis exploratorio de la base de datos "cruda" 
+* EDA, GEDA y data profiling de la base de datos `base.csv`
 
 * Separar los datos por años `1990`, `1995` , `2000`, `2005`, `2010` y `2015`
 
