@@ -16,12 +16,19 @@
 ## Tareas a realizar para este primer avance 
 
 
+*Domingo 22 de noviembre*
 - [X] Discutir el tema que deseamos implementar para este proyecto final
 
 - [X] Una vez decidido el tema nos dirigimos a buscar datos interesante con los cuales pudiéramos desarrollar un trabajo interesante
 
 - [X] Buscamos bibliografía del tema, así como del análisis de componentes principales, así como su implementación en R y en Python
 
+*Viernes 27 de noviembre*
+
+- [X] Se analizó la base de datos, notamos que dos de los indicadores socioeconómicos tenían el mismo significado, por lo que decidimos eliminar aquella variable con mayor número de datos faltantes. 
+
+- [X] Una vez seleccionadas las variables con las que trabajaremos notamos que los datos contaban únicamente con 32 valores faltantes, decidimos imputar estos valores, [aquí el código]()
+ 
 
 ## Tareas a realizar para el segundo avance 
 
