@@ -1,4 +1,4 @@
-# Practica Final : Análisis de componentes principales (PCA)
+# Practica Final : Creación de indice con análisis de componentes principales (PCA)
 
 * Profesor: Erick Palacios Moreno
 * Lenguaje a utilizar: Por definir 
@@ -17,11 +17,11 @@
 
 
 *Domingo 22 de noviembre*
-- [X] Discutir el tema que deseamos implementar para este proyecto final
+- [X] Discutir el tema que deseamos implementar para este proyecto final.
 
-- [X] Una vez decidido el tema nos dirigimos a buscar datos interesante con los cuales pudiéramos desarrollar un trabajo interesante
+- [X] Una vez decidido el tema nos dirigimos a buscar datos interesante con los cuales pudiéramos desarrollar un trabajo interesante.
 
-- [X] Buscamos bibliografía del tema, así como del análisis de componentes principales, así como su implementación en R y en Python
+- [X] Buscamos bibliografía del tema, así como del análisis de componentes principales, así como su implementación en R y en Python.
 
 *Viernes 27 de noviembre*
 
@@ -30,13 +30,21 @@
 - [X] Una vez seleccionadas las variables con las que trabajaremos notamos que los datos contaban únicamente con 32 valores faltantes, decidimos imputar estos valores con ayuda del lengiaje de programación `R`.
 
 
-## Tareas a realizar para el segundo avance 
+## Tareas a realizar para el segundo avance:
 
-- Creación del proyecto y asignación de issues para cada integrante.
+- Definir al project manager.
+
+- Creación del proyecto, milestones e issues.
+
+- Asiganción de issues para cada integrante.
 
 - Creación de ramas para desarrollo de issues.
 
 - Los issues a asignar son: 
+
+    - Agregar el link a nuestras AWS instances.
+    
+    - Agregar la ip de Erick como regla de entrada a nuestras instancias.
 
     - Separar los datos `base.csv` por años `1990`, `1995` , `2000`, `2005`, `2010` y `2015`
 
