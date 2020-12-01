@@ -1,7 +1,7 @@
 # Practica Final : Análisis de componentes principales (PCA)
 
 * Profesor: Erick Palacios Moreno
-* Lenguaje a utilizar: Python
+* Lenguaje a utilizar: Por definir 
 
 ## Equipo
 
