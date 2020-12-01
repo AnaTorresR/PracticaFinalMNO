@@ -74,6 +74,8 @@
 
 [Componentes principales en Python](https://towardsdatascience.com/pca-using-python-scikit-learn-e653f8989e60)
 
+[Ejemplo de análisis de componentes principales con R](https://www.cienciadedatos.net/documentos/35_principal_component_analysis)
+
 
 
 
