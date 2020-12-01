@@ -32,16 +32,25 @@
 
 ## Tareas a realizar para el segundo avance 
 
-* EDA, GEDA y data profiling de la base de datos `base.csv`
+- Creación del proyecto y asignación de issues para cada integrante.
 
-* Separar los datos por años `1990`, `1995` , `2000`, `2005`, `2010` y `2015`
+- Creación de ramas para desarrollo de issues.
 
-* Recrear el índice de marginación con los pesos obtenidos del análisis de componentes principales 
+- Los issues a asignar son: 
 
-* Comparar el índice obtenido de los componentes con el índice creado por el Consejo Nacional de Población (CONAPO)
-* Peportar resultados en un notebook 
+    - Separar los datos `base.csv` por años `1990`, `1995` , `2000`, `2005`, `2010` y `2015`
 
-* Crear presentación  ¿?
+    - EDA, GEDA y data profiling de la base de datos `base.csv` ya que esta separada por años, en el notebook analisis_exploratorio.ipynb hay funciones útiles que podemos usar.
+
+    - Crear nuestro el índice de marginación con los pesos obtenidos del análisis de componentes principales.
+
+    - Comparar el índice obtenido de los componentes con el índice creado por el Consejo Nacional de Población (CONAPO).
+
+    - Peportar resultados en un notebook.
+
+    - Crear presentación.
+    
+    - Agregar ligas hacia el trabajo escrito y presentación
 
 
 ## Docker 
