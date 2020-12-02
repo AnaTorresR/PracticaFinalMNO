@@ -5,13 +5,17 @@
 
 ## Equipo
 
-|Integrantes |Clauve única| Instancia AWS |
+|Integrantes |Clauve única| GitHub |
 |:---:|:---:|:---:|
-|Ana Torres |197705| | 
-|Carlos López |   | |
-|Iván Salgado |197704|| 
-|Roberto Pérez| | |
+|Ana Torres |197705| AnaTorresR | 
+|Carlos López |   | Carlosrlpzi |
+|Iván Salgado |197704| IvanSalgadoVel | 
+|Roberto Pérez| 173013 | Roberto919 |
 
+## Instancia AWS
+- Public IPv4 DNS: ec2-34-207-190-50.compute-1.amazonaws.com
+- Puerto para acceso a jupyterlab: 8787
+- Clave de acceso: qwerty
 
 ## Tareas a realizar para este primer avance 
 
@@ -32,33 +36,29 @@
 
 ## Tareas a realizar para el segundo avance:
 
-- Definir al project manager.
+- [X] Definir al project manager -> Roberto Pérez (Roberto919)
 
-- Creación del proyecto, milestones e issues.
+- [X] Creación del proyecto, milestones e issues.
 
-- Asiganción de issues para cada integrante.
+- [X] Asiganción de issues para cada integrante.
 
-- Creación de ramas para desarrollo de issues.
+    - Los issues a asignar son: 
 
-- Los issues a asignar son: 
-
-    - Agregar el link a nuestras AWS instances.
+        - [X] Agregar el link a nuestras AWS instances.
     
-    - Agregar la ip de Erick como regla de entrada a nuestras instancias.
+        - [X] Separar los datos `base.csv` por años `1990`, `1995` , `2000`, `2005`, `2010` y `2015`
 
-    - Separar los datos `base.csv` por años `1990`, `1995` , `2000`, `2005`, `2010` y `2015`
+        - [X] EDA, GEDA y data profiling de la base de datos `base.csv` ya que esta separada por años, en el notebook analisis_exploratorio.ipynb hay funciones útiles que podemos usar.
 
-    - EDA, GEDA y data profiling de la base de datos `base.csv` ya que esta separada por años, en el notebook analisis_exploratorio.ipynb hay funciones útiles que podemos usar.
+        - [X] Crear nuestro el índice de marginación con los pesos obtenidos del análisis de componentes principales.
 
-    - Crear nuestro el índice de marginación con los pesos obtenidos del análisis de componentes principales.
+        - [X] Comparar el índice obtenido de los componentes con el índice creado por el Consejo Nacional de Población (CONAPO).
 
-    - Comparar el índice obtenido de los componentes con el índice creado por el Consejo Nacional de Población (CONAPO).
+        - [X] Reportar resultados en un notebook.
 
-    - Peportar resultados en un notebook.
-
-    - Crear presentación.
+        - [X] Crear presentación.
     
-    - Agregar ligas hacia el trabajo escrito y presentación
+        - [X] Agregar ligas hacia el trabajo escrito y presentación
 
 
 ## Docker 
