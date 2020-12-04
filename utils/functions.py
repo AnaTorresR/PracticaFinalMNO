@@ -16,6 +16,11 @@ import json
 import pandas as pd
 
 from sklearn.cluster import KMeans
+from sklearn.metrics import confusion_matrix
+
+import matplotlib.pyplot as plt
+
+import seaborn as sns
 
 
 ## Ancillary modules
@@ -118,6 +123,38 @@ def cluster_metrics(c_dict, gm_dict):
         }
 
     return c_dict_res
+
+
+
+##
+def display_confusion_matrix(df_ime):
+    """
+    """
+
+    ## Labels that will be compared
+    labs = list(df_ime["GM"].unique())
+    labs.sort()
+
+    ## Dataframe that will be converted into a heatmap
+    conf_mtrx = pd.DataFrame(confusion_matrix(df_ime["GM"], df_ime["cluster"]), labs)
+    conf_mtrx.columns = labs
+
+    ## Converting dataframe into heatmap
+    f, ax = plt.subplots(figsize=(9, 6))
+
+    ax.set_title("Confusion Matrix")
+
+    sns.heatmap(
+        conf_mtrx,
+        annot=True,
+        fmt="d",
+        linewidths=0.1,
+        ax=ax
+    )
+
+    plt.yticks(rotation=0)
+
+    plt.show()
 
 
 
