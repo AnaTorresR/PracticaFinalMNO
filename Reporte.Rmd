@@ -106,6 +106,56 @@ $$\frac{x_i-media(x)}{desv(x)},$$
 
 Este método produce una secuencia de transformaciones ortogonales de la forma $J_k^TAJ_k$ con el objetivo de hacer “más diagonal” a la matriz $A \in \mathbb{R}^{n \times n}$.
 
+Si la matriz $A$ es simétrica y $J_0$ es una transformación de Jacobi, entonces el esquema iterativo $A_{k+1}=(J_0J_1...J_k)^TAJ_0J_1...J_k)$ converge a una matriz diagonal en la que se encuentran los eigenvalores de $A$.
+
+El algortimo para matrices simétricas es:
+
+Dados $A$ simétrica y $tol>0$ definimos $A_0=A,Q_0=I_n$, repetimos el siguiente bloque para $K=0,1,2,...$
+
+1) Elegir un par de índices $(idx1,idx2)$
+
+2) Calcular las entradas $cos(\theta)$, $sen(\theta)$ de la matriz de rotación $J_k$.
+
+3) $A_{k+1}= J_k^T A_k J_k$
+
+4) $Q_{k+1} = Q_{k}J_k$
+
+La matriz $J_k$ se utiliza para eliminar un par de entradas (simétricas) en la matriz $A_k$, esto preserva la simetría de la matriz original. En las columnas de la matriz $Q_k$ se encuentran aproximaciones a los eigenvectores de $A$ y en la diagonal de $A_k$ se tienen aproximaciones a los eigenvalores de $A$.
+
+# K-medias
+
+El clustering de particiones son métodos de agrupamiento para clasificar observaciones dentro del conjunto de datos en multiples grupos basados en su similaridad, ya que se desconoce de manera inicial tanto el número total de grupos, como en donde se encuentra cada observación en particular. Los algoritmos requieren que el analista especifique el número de grupos que se desea generar.
+
+$K$-medias es el algoritmo no supervisado más común para particionar datos dados en un conjunto de $k$ grupos, es decir, $k$ clusters, en donde $k$ representa el número de grupos pre especificados por el analista. Éste algoritmo clasifica objetos en múltiples grupos tal que los objetos dentro del mismo
+grupo son lo más similares posibles (alta similaridad dentro de las clases), mientras que los objetos de diferentes grupos son lo más disimilares posible (baja similaridad entre clases). En $k$ medias, cada cluster es representado por su centro (centroide) el cual corresponde a la media de los puntos asignados a ese grupo.
+
+La idea básica detrás de $k$-medias consiste en definir grupos de tal forma que la variación total dentro de cada grupo (conocida como variación total entre clusters) se minimice.
+
+Existen varios algoritmos para k-medias. El algoritmo estándar es el algoritmo *Hartigan-Wong (1979)*, el cual define la variación total dentro de cada grupo como la suma de las distancias euclideanas al cuadrado entre los objetos y el centroide correspondiente.
+
+$$ tot.withinss =W(C_k) = \sum_{x_i \in C_k}(x_i - \mu_k)^2,$$
+
+donde:
+
+-  $x_i$ representa un punto de los datos que pertenece al grupo $C_k$
+
+-  $\mu_k$ el valor medio de los puntos asignados al grupo $C_k$
+
+Cada observación $(x_i)$ es asignada a un grupo tal que la suma de cuadrados (SC) entre cada observación al centroide $\mu_k$ del grupo sea mínima en comparación a la distancia que llegase a tener con $\mu_j$ que es el centro del grupo $j$ (con $j\neq k$).
+
+La suma de cuadrados de la variación total dentro de cada conglomerado mide la compacidad (calidad) del agrupamiento y queremos que sea lo más pequeña posible.
+
+## Algoritmo
+
+El primer paso para usar el algoritmo de $k$-medias es indicar el número de conglomerados ($k$) que se generarán en la solución final.
+
+El algoritmo comienza con una selección aleatoria de $k$ observaciones del conjunto de datos, estos servirán como los centros iniciales de los grupos. Las observaciones seleccionadas son también conocidas como las medias de los conglomerados o centroides.
+
+El siguiente paso es asignar cada una de las observaciones restantes al centroide más cercano a ellas, esto se define utilizando la distancia euclideana entre la observación y el centroide. Este paso se llama *asignación de grupo*. 
+
+Después del paso de asignación , el algoritmo computa el nuevo valor medio de cada grupo. El término *actualización del centroide* es utilizado para diseñar este paso. Ahora que los centros han sido recalculados, cada observación se revisa nuevamente con el fin de verificar si éstas pueden estar cercanas a un grupo diferente. Todas las observaciones son reasignadas nuevamente usando las medias actualizadas de cada grupo
+
+La asignación de grupo y la actualización del centroide son pasos iterativos hasta que la asignación de grupo deje de cambiar (hasta que se logra una convergencia). Esto es, los grupos formados en la iteración actual son los mismo que se obtuvieron en la iteración previa. 
 
 
 
