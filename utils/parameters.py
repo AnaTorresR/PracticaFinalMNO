@@ -18,9 +18,11 @@ gm_rename = { "Muy bajo": "0_muy_bajo",
     "Muy alto": "4_muy_alto"
 }
 
-
 ## Year processed
 yr = 2010
+
+## Number of clusters
+n_clusters = 5
 
 
 
@@ -79,20 +81,20 @@ original_features = {
     },
     "PO2SM": {
         "feature": True,
-        "selected": True
+        "selected": False
     },
     "IM": {
         "feature": False,
-        "selected": True
+        "selected": False
     },
     "GM": {
         "feature": False,
-        "selected": True,
+        "selected": False,
         "classif": True
     },
     "LUGAR": {
         "feature": False,
-        "selected": True
+        "selected": False
     },
     "A.O": {
         "feature": False,
