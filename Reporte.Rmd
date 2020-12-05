@@ -1,5 +1,5 @@
 ---
-title: "Creación de indice con análisis de componentes principales"
+title: "Estudio del grado de marginación por medio de análisis de componentes principales y k medias"
 author: "Equipo 3"
 date: "3/12/2020"
 output: pdf_document
@@ -11,7 +11,10 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Objetivo
 
-Se usara análisis de componentes principales para recrear el índice de marginación del Consejo Nacional de la Población. Además se realizaran agrupaciones por el método de clusters jerárquicos con las variables originales y las obtenidas por el método de componentes principales. 
+Se usará análisis de componentes principales para reducir la dimensión de los $9$ indicadores socioeconómicos que forman al índice de marginación, una vez se tenga la reducción de dimensiones
+
+
+recrear el índice de marginación del Consejo Nacional de la Población. Además se realizaran agrupaciones por el método de clusters jerárquicos con las variables originales y las obtenidas por el método de componentes principales. 
 
 # Índice de marginación CONAPO
 
@@ -79,17 +82,16 @@ En esta sección se presentarán las reglas para decidir con cuántos componente
 
 ### Porcentaje acumulado de la varianza total
 
-El criterio más obvio para seleccionar el número de componentes principales es seleccionando el porcentaje acumulado de la varianza total. Normalmente se desea que los componentes principales seleccionados contribuyan entre $80\%$ y $90\%$. El número requerido de componentes principales es el valor más pequeño $m$ para el cual este porcentaje se ha excedido. Este criterio es válido para la matriz de covarianza y correlación.
+El criterio más común para seleccionar el número de componentes principales es seleccionando el porcentaje acumulado de la varianza total. Normalmente se desea que los componentes principales seleccionados contribuyan entre $80\%$ y $90\%$. El número requerido de componentes principales es el valor más pequeño $m$ para el cual este porcentaje se ha excedido. Este criterio es válido para la matriz de covarianza y correlación.
 
 ### Valores propios / Varianzas
 
 Como se ha mencionado anteriormente, los valores propios miden la cantidad de varianza retenida por cada componente principal. Los valores propios son grandes para los primeros componentes principales y pequeños para los componentes subsecuentes. Esto es debido a que los primeros componentes corresponden a las direcciones con la máxima varianza en el conjunto de datos.
 
-Los valores propios pueden se usados para determinar el número de componentes principales:
+Los valores propios pueden ser usados para determinar el número de componentes principales:
 
 - Un valor propio $>1$ indica que el componente principal considera más varianza que la que considera la variable original estandarizada. Esto es utilizado como punto de corte para retener los componentes principales cuyos valores propios sean mayor a 1. Esto es cierto solamente cuando los datos están estandarizados.
 
-- También se puede obtener el número de componentes principales a trabajar seleccionando a aquellos que contengan un cierto porcentaje de varianza total. Por ejemplo, si el usuario está dispuesto a trabajar con el $80\%$ de varianza total explicada, entonces se utilizan los componentes que logren ese porcentaje.
 
 Desafortunadamente no hay forma objetiva para decidir cuántos componentes principales son suficientes. Esto depende de cada conjunto de datos con el que se esté trabajando. En la práctica, se tiende a analizar los primeros componentes principales para encontrar patrones interesantes en los datos.
 
@@ -101,6 +103,8 @@ El objetivo es hacer las variables comparables. Generalmente las variables se es
 Cuando se escalan las variables, éstas se transforman de la siguiente manera:
 
 $$\frac{x_i-media(x)}{desv(x)},$$
+
+\newpage
 
 # Método de Rotaciones de Jacobi para matrices simétricas
 
@@ -133,7 +137,7 @@ La idea básica detrás de $k$-medias consiste en definir grupos de tal forma qu
 
 Existen varios algoritmos para k-medias. El algoritmo estándar es el algoritmo *Hartigan-Wong (1979)*, el cual define la variación total dentro de cada grupo como la suma de las distancias euclideanas al cuadrado entre los objetos y el centroide correspondiente.
 
-$$ tot.withinss =W(C_k) = \sum_{x_i \in C_k}(x_i - \mu_k)^2,$$
+$$ W(C_k) = \sum_{x_i \in C_k}(x_i - \mu_k)^2,$$
 
 donde:
 
@@ -157,13 +161,156 @@ Después del paso de asignación , el algoritmo computa el nuevo valor medio de 
 
 La asignación de grupo y la actualización del centroide son pasos iterativos hasta que la asignación de grupo deje de cambiar (hasta que se logra una convergencia). Esto es, los grupos formados en la iteración actual son los mismo que se obtuvieron en la iteración previa. 
 
+## Ventajas y desventajas de k-medias
 
+$K$-medias es un algoritmo simple y rápido. Puede trabajar eficientemente con grandes conjuntos de datos. Sin embargo, existen ciertas desventajas, incluyendo:
+
+- Asume conocimiento previo de los datos y requiere que el analista elija el número apropiado de grupos.
+
+- Los resultados finales son sensibles a la selección inicial aleatoria de centrides. Esto es un problema debido a que en cada iteración del algoritmo se seleccionará (con alta frecuencia) diferentes centroides iniciales aunque se esté trabajando con un sólo conjunto de datos. Esto puede dirigir a diferentes resultados de conglomerados en diferentes iteraciones.
+
+- Es sensible con valores atípicos.
+
+-  Si se reacomodan los datos, es posible que se obtenga una solución diferente cada que se ordenen los datos.
+
+
+\newpage
 
 # Implementación
 
+Se analizaron los indicadores socioeconómicos de los años 1990, 2000 y 2015, realizamos una reducción de dimensiones por medio de análisis de componentes principales. Para poder realizar esto se hizo uso del algoritmo de método de rotaciones de Jacobi estudiado en clase. 
+
+
+      def sign(x):
+          """
+          Helper function for computing sign of real number x.
+          """
+          if x >=0:
+          return 1
+          else:
+          return -1
+
+    def compute_cos_sin_Jacobi_rotation(Ak, idx1, idx2):
+        """
+        Helper function for computing entries of Jacobi rotation.
+        Args:
+          Ak (numpy ndarray): Matrix of iteration k in Jacobi rotation method.
+          idx1 (int): index for rows in Jacobi rotation matrix.
+          idx2 (int): index for columns in Jacobi rotation matrix.
+        Returns:
+          c (float): value of cos of theta for Jacobi rotation matrix.
+          s (float): value of sin of theta for Jacobi rotation matrix.
+        """
+        if np.abs(Ak[idx1,idx2]) > np.finfo(float).eps:
+          tau = (Ak[idx2, idx2] - Ak[idx1, idx1])/(2*Ak[idx1, idx2])
+          t_star = sign(tau)/(np.abs(tau) + np.sqrt(1+tau**2))
+          c = 1/np.sqrt(1+t_star**2)
+          s = c*t_star
+        else: #no rotation is performed
+          c = 1
+          s = 0
+        return (c,s)
+
+
+    def compute_Jacobi_rotation(Ak, idx1, idx2):
+      """
+      Compute Jacobi rotation matrix.
+      Args:
+          Ak (numpy ndarray): Matrix of iteration k in Jacobi rotation method.
+          idx1 (int): index for rows in Jacobi rotation matrix.
+          idx2 (int): index for columns in Jacobi rotation matrix.
+      Returns:
+          J (numpy ndarray): Jacobi rotation matrix.
+      """
+      c,s = compute_cos_sin_Jacobi_rotation(Ak, idx1, idx2)
+      m,n = Ak.shape
+      J = np.eye(m)
+      J[idx1, idx1] = J[idx2, idx2] = c
+      J[idx1, idx2] = s
+      J[idx2, idx1] = -s
+      return J
+
+Para estos tres años se tuvieron que realizar 3 sweeps con las siguientes iteraciones utilizando la matriz de varianzas y covarianzas de las variables estandarizadas: 
+
+    (1,2),(1,3),(1,4),(1,5),(1,6),(1,7), (1,8),(1,9),
+
+     (2,3),(2,4),(2,5), (2,6), (2,7), (2,8), (2,9)
+
+     (3,4), (3,5), (3,6), (3,7), (3,9), (3,9),
+
+     (4,5), (4,6), (4,7), (4,8), (4,9),
+
+     (5,6), (5,7), (5,8), (5,9),
+
+     (6,7), (6,8), (6,9),
+
+     (7,8), (7,9),
+
+     (8,9)
+     
+Una vez realizados los sweeps obtenemos la matriz A diagonalizada, en esta matriz se encuentran los valores propios de la matriz de covarianzas. Decidimos comparar los valores propios obtenidos por nuestra función con los valores propios obtenidos por la función de `Python np.linalg.eig()`. Observamos que nuestros resultados son los mismos a los valores propios proporcionados a la función de `numpy`, por lo que utilizamos los vectores propios de esta misma función.
+
+Lo siguiente que realizamos fue ordenar de manera descendente los valores propios, de tal forma que la matriz de vectores propios contenga el vector propio cuyo valor propio es el más alto, y así sucesivamente. 
+Para la creación de la matriz de PCA realizamos la multiplicación entre la matriz de vectores propios y los datos que contienen a los indicadores socioeconómicos estandarizados. Así obtenemos una matrix de $32x9$. 
+
+Posteriormente se analizó la varianza explicada por estas nuevas dimensiones. El porcentaje de varianza explicada se realizó de la siguiente manera en `Python`: 
+
+
+      explained_variances = []
+      for i in range (len(eig)):
+          explained_variances.append(eig[i]/np.sum(eig))
+      print(explained_variances)
+     
+
+Y finalmente se interpretó gráficamente el comportamiento de los primeros dos componentes principales coloreados por el grado de marginación. En la siguiente sección del reporte se mostrarán los resultados obtenidos.
+
+
+Para la clasificación de estos estados se utilizarán K-medias seleccionando 5 grupos que hacen referencia a los grados de marginación `Muy bajo`, `Bajo`, `Medio`, `Alto` y `Muy alto`. Por medio de matrices de confusiones analizaremos si la matriz de componentes principales agrupa mejor a los estados.
+
+\newpage
+
 # Resultados 
 
-# Presentación 
+## Año 1990 
+
+### K-medias utilizando los indicadores socioeconóminos 
+
+
+### PCA
+
+
+### K-medias utilizando componentes principales
+
+\newpage
+
+## Año 2000
+
+### K-medias utilizando los indicadores socioeconóminos 
+
+
+### PCA
+
+
+### K-medias utilizando componentes principales
+
+
+\newpage
+
+## Año 2015
+### K-medias utilizando los indicadores socioeconóminos 
+
+
+### PCA
+
+
+### K-medias utilizando componentes principales
+
+
+
+
+\newpage
+
+# Conclusiones
 
 # Referencias
 
