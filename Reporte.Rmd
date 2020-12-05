@@ -311,6 +311,8 @@ knitr::include_graphics("img/valores_1990.png")
 ```
 
 
+Con la imagen anterior notamos que los valores propios obtenidos con la aproximación de Jacobi son muy parecidos a los obtenidos con la función de numpy.
+
 ### Componentes principales
 
 ```{r,echo=FALSE}
@@ -318,11 +320,15 @@ PCA_1990<-read.csv('PCA_1990.csv')
 head(PCA_1990)
 ```
 
+Observamos los primeros 6 valores de cada componente principal, para la construcción del índice solo fue necesario usar la primera componente principal.
+
 ### Gráfica dos dimensiones
 
 ```{r echo=FALSE,fig.align='center',out.width = "500px", out.height="500px"}
 knitr::include_graphics("img/pca_1990.png")
 ```
+
+Una ventaja de las componentes principales es que nos ayudan a la visualización, podemos pasar de 9 dimensiones a 2 o 3 dimensiones y poder visualizar los datos. Podemos observar que la separación usando las primeras dos componentes es muy buena, ya que podemos apreciar los grados de marginación bien separados.
 
 ### K-medias utilizando componentes principales
 
