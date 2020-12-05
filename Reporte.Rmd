@@ -11,10 +11,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Objetivo
 
-Se usará análisis de componentes principales para reducir la dimensión de los $9$ indicadores socioeconómicos que forman al índice de marginación, una vez se tenga la reducción de dimensiones
-
-
-recrear el índice de marginación del Consejo Nacional de la Población. Además se realizaran agrupaciones por el método de clusters jerárquicos con las variables originales y las obtenidas por el método de componentes principales. 
+Se usará análisis de componentes principales para reducir la dimensión de los $9$ indicadores socioeconómicos que forman al índice de marginación, una vez se tenga la reducción de dimensiones se recreará el índice de marginación del Consejo Nacional de la Población. Además se realizaran agrupaciones por el método de k-medias con las variables originales y las obtenidas por el método de componentes principales. 
 
 # Índice de marginación CONAPO
 
@@ -108,6 +105,8 @@ $$\frac{x_i-media(x)}{desv(x)},$$
 
 # Método de Rotaciones de Jacobi para matrices simétricas
 
+Para este proyecto no usaremos las funciones ya programadas, usaremos el método de rotaciones de Jacobi para aproximar los valores propios y los vectores propios y con estos poder calcular las componentes principales.
+
 Este método produce una secuencia de transformaciones ortogonales de la forma $J_k^TAJ_k$ con el objetivo de hacer “más diagonal” a la matriz $A \in \mathbb{R}^{n \times n}$.
 
 Si la matriz $A$ es simétrica y $J_0$ es una transformación de Jacobi, entonces el esquema iterativo $A_{k+1}=(J_0J_1...J_k)^TAJ_0J_1...J_k)$ converge a una matriz diagonal en la que se encuentran los eigenvalores de $A$.
@@ -178,6 +177,8 @@ $K$-medias es un algoritmo simple y rápido. Puede trabajar eficientemente con g
 
 # Implementación
 
+En primer lugar usamos la función que se desarrolló en la segunda parte de la práctica 1 para aproximar los valores propios y los vecores propios, despues con estos vectores propios se calculan las componenes principales. Ya con los componentes principales creamos nuestro indice con el primer componente.
+
 Se analizaron los indicadores socioeconómicos de los años 1990, 2000 y 2015, realizamos una reducción de dimensiones por medio de análisis de componentes principales. Para poder realizar esto se hizo uso del algoritmo de método de rotaciones de Jacobi estudiado en clase. 
 
 
@@ -229,8 +230,8 @@ Se analizaron los indicadores socioeconómicos de los años 1990, 2000 y 2015, r
       J[idx1, idx2] = s
       J[idx2, idx1] = -s
       return J
-
-Para estos tres años se tuvieron que realizar 3 sweeps con las siguientes iteraciones utilizando la matriz de varianzas y covarianzas de las variables estandarizadas: 
+      
+Para estos tres años se tuvieron que realizar entre 3 y 4 sweeps con las siguientes iteraciones utilizando la matriz de varianzas y covarianzas de las variables estandarizadas: 
 
     (1,2),(1,3),(1,4),(1,5),(1,6),(1,7), (1,8),(1,9),
 
@@ -248,7 +249,33 @@ Para estos tres años se tuvieron que realizar 3 sweeps con las siguientes itera
 
      (8,9)
      
-Una vez realizados los sweeps obtenemos la matriz A diagonalizada, en esta matriz se encuentran los valores propios de la matriz de covarianzas. Decidimos comparar los valores propios obtenidos por nuestra función con los valores propios obtenidos por la función de `Python np.linalg.eig()`. Observamos que nuestros resultados son los mismos a los valores propios proporcionados a la función de `numpy`, por lo que utilizamos los vectores propios de esta misma función.
+Una vez realizados los sweeps obtenemos la matriz A diagonalizada, en esta matriz se encuentran los valores propios de la matriz de covarianzas. Decidimos comparar los valores propios obtenidos por nuestra función con los valores propios obtenidos por la función de `Python np.linalg.eig()`. Observamos que nuestros resultados son aproximadamente iguales a los valores propios proporcionados a la función de `numpy`. 
+
+Para obtener la matriz de vectores propios utilizamos la siguiente función:
+
+    def compute_Jacobi_egvectors(A, sweeps):
+        """
+        Compute Jacobi rotation matrix.
+        Args:
+        Ak (numpy ndarray): Matrix of iteration k in Jacobi rotation method.
+        idx1 (int): index for rows in Jacobi rotation matrix.
+        idx2 (int): index for columns in Jacobi rotation matrix.
+        Returns:
+        Qk (numpy ndarray): Eigenvectors
+        """
+        m,n = A.shape
+        Q = np.eye(m)
+        for n in range(sweeps):
+            for i in range(A.shape[0]):
+                j = i + 1
+            for m in range(A.shape[0]-i-1):
+                if off(A) > (1e-8)*np.linalg.norm(A):
+                    J = compute_Jacobi_rotation(A, i, j)
+                    Qk = Q@J
+                    Q = Qk
+                    j += 1
+      return Qk
+
 
 Lo siguiente que realizamos fue ordenar de manera descendente los valores propios, de tal forma que la matriz de vectores propios contenga el vector propio cuyo valor propio es el más alto, y así sucesivamente. 
 Para la creación de la matriz de PCA realizamos la multiplicación entre la matriz de vectores propios y los datos que contienen a los indicadores socioeconómicos estandarizados. Así obtenemos una matrix de $32x9$. 
@@ -262,10 +289,9 @@ Posteriormente se analizó la varianza explicada por estas nuevas dimensiones. E
       print(explained_variances)
      
 
-Y finalmente se interpretó gráficamente el comportamiento de los primeros dos componentes principales coloreados por el grado de marginación. En la siguiente sección del reporte se mostrarán los resultados obtenidos.
+Obtuvimos un nuevo índice de marginación con el primer componente principal, y finalmente se interpretó gráficamente el comportamiento de los primeros dos componentes principales coloreados por el grado de marginación. En la siguiente sección del reporte se mostrarán los resultados obtenidos.
 
-
-Para la clasificación de estos estados se utilizarán K-medias seleccionando 5 grupos que hacen referencia a los grados de marginación `Muy bajo`, `Bajo`, `Medio`, `Alto` y `Muy alto`. Por medio de matrices de confusiones analizaremos si la matriz de componentes principales agrupa mejor a los estados.
+Para la clasificación de estos estados se utilizarán K-medias seleccionando 5 grupos que hacen referencia a los grados de marginación `Muy bajo`, `Bajo`, `Medio`, `Alto` y `Muy alto`. Por medio de matrices de confusiones analizaremos elindice creado con la primer componente principal, se desea que estos nuevos componentes agrupen a los estados según su grado de marginación, es decir, parecido a la agrupación de k-medias obtenida por los 9 indicadores socioeconómicos .
 
 \newpage
 
@@ -276,8 +302,27 @@ Para la clasificación de estos estados se utilizarán K-medias seleccionando 5 
 ### K-medias utilizando los indicadores socioeconóminos 
 
 
-### PCA
+## PCA
 
+### Valores propios 
+
+```{r echo=FALSE,fig.align='center',fig.align='center',out.width = "500px", out.height="500px"}
+knitr::include_graphics("img/valores_1990.png")
+```
+
+
+### Componentes principales
+
+```{r,echo=FALSE}
+PCA_1990<-read.csv('PCA_1990.csv')
+head(PCA_1990)
+```
+
+### Gráfica dos dimensiones
+
+```{r echo=FALSE,fig.align='center',out.width = "500px", out.height="500px"}
+knitr::include_graphics("img/pca_1990.png")
+```
 
 ### K-medias utilizando componentes principales
 
@@ -288,8 +333,27 @@ Para la clasificación de estos estados se utilizarán K-medias seleccionando 5 
 ### K-medias utilizando los indicadores socioeconóminos 
 
 
-### PCA
+## PCA
 
+### Valores propios 
+
+```{r echo=FALSE,fig.align='center',fig.align='center',out.width = "500px", out.height="500px"}
+knitr::include_graphics("img/valores_2000.png")
+```
+
+
+### Componentes principales
+
+```{r,echo=FALSE}
+PCA_2000<-read.csv('PCA_2000.csv')
+head(PCA_2000)
+```
+
+### Gráfica dos dimensiones
+
+```{r echo=FALSE,fig.align='center',out.width = "500px", out.height="500px"}
+knitr::include_graphics("img/pca_2000.png")
+```
 
 ### K-medias utilizando componentes principales
 
@@ -300,8 +364,29 @@ Para la clasificación de estos estados se utilizarán K-medias seleccionando 5 
 ### K-medias utilizando los indicadores socioeconóminos 
 
 
-### PCA
+## PCA
 
+### Valores propios 
+
+```{r echo=FALSE,fig.align='center',fig.align='center',out.width = "500px", out.height="500px"}
+knitr::include_graphics("img/valores_2015.png")
+```
+
+
+### Componentes principales
+
+```{r,echo=FALSE}
+PCA_2015<-read.csv('PCA_2015.csv')
+head(PCA_2015)
+```
+
+
+### Gráfica dos dimensiones
+
+
+```{r echo=FALSE,fig.align='center',out.width = "500px", out.height="500px"}
+knitr::include_graphics("img/pca_2015.png")
+```
 
 ### K-medias utilizando componentes principales
 
