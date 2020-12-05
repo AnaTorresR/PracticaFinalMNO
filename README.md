@@ -1,7 +1,7 @@
 # Practica Final : Creación de indice con análisis de componentes principales (PCA)
 
 * Profesor: Erick Palacios Moreno
-* Lenguaje a utilizar: Por definir 
+* Lenguaje a utilizar: Python
 
 ## Equipo
 
