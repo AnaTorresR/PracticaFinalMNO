@@ -1,7 +1,7 @@
 # Practica Final : Creación de indice con análisis de componentes principales (PCA)
 
 * Profesor: Erick Palacios Moreno
-* Lenguaje a utilizar: Por definir 
+* Lenguaje a utilizar: Python
 
 ## Equipo
 
@@ -46,7 +46,7 @@
 
         - [X] Agregar el link a nuestras AWS instances.
     
-        - [X] Separar los datos `base.csv` por años `1990`, `1995` , `2000`, `2005`, `2010` y `2015`
+        - [X] Separar los datos `base.csv` por años `1990`, `2000` y `2015`
 
         - [X] EDA, GEDA y data profiling de la base de datos `base.csv` ya que esta separada por años, en el notebook analisis_exploratorio.ipynb hay funciones útiles que podemos usar.
 

@@ -19,7 +19,7 @@ gm_rename = { "Muy bajo": "0_muy_bajo",
 }
 
 ## Year processed
-yr = 2010
+yr = 2015
 
 ## Number of clusters
 n_clusters = 5
@@ -81,7 +81,7 @@ original_features = {
     },
     "PO2SM": {
         "feature": True,
-        "selected": False
+        "selected": True
     },
     "IM": {
         "feature": False,
@@ -93,6 +93,60 @@ original_features = {
         "classif": True
     },
     "LUGAR": {
+        "feature": False,
+        "selected": False
+    },
+    "A.O": {
+        "feature": False,
+        "selected": False,
+        "year_id": True
+    }
+}
+
+
+pca_features = {
+    "PC1": {
+        "feature": True,
+        "selected": True
+    },
+    "PC2": {
+        "feature": True,
+        "selected": True
+    },
+    "PC3": {
+        "feature": True,
+        "selected": True
+    },
+    "PC4": {
+        "feature": True,
+        "selected": True
+    },
+    "PC5": {
+        "feature": True,
+        "selected": True
+    },
+    "PC6": {
+        "feature": True,
+        "selected": False
+    },
+    "PC7": {
+        "feature": True,
+        "selected": False
+    },
+    "PC8": {
+        "feature": True,
+        "selected": False
+    },
+    "PC9": {
+        "feature": True,
+        "selected": False
+    },
+    "GM": {
+        "feature": False,
+        "selected": False,
+        "classif": True
+    },
+    "IM": {
         "feature": False,
         "selected": False
     },
