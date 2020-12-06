@@ -7,17 +7,16 @@
 
 |Integrantes |Clauve única| GitHub |
 |:---:|:---:|:---:|
-|Ana Torres |197705| AnaTorresR | 
-|Carlos López |   | Carlosrlpzi |
-|Iván Salgado |197704| IvanSalgadoVel | 
+|Ana Torres |197705| AnaTorresR |
+|Carlos López | 197911 | Carlosrlpzi |
+|Iván Salgado |197704| IvanSalgadoVel |
 |Roberto Pérez| 173013 | Roberto919 |
 
-## Instancia AWS
-- Public IPv4 DNS: ec2-34-207-190-50.compute-1.amazonaws.com
-- Puerto para acceso a jupyterlab: 8787
-- Clave de acceso: qwerty
+## Liga al repositorio
+[Practica Final : Creación de indice con análisis de componentes principales (PCA)](https://github.com/AnaTorresR/PracticaFinalMNO)
 
-## Tareas a realizar para este primer avance 
+
+## Tareas a realizar para este primer avance
 
 
 *Domingo 22 de noviembre*
@@ -29,7 +28,7 @@
 
 *Viernes 27 de noviembre*
 
-- [X] Se analizó la base de datos, notamos que dos de los indicadores socioeconómicos tenían el mismo significado, por lo que decidimos eliminar aquella variable con mayor número de datos faltantes. 
+- [X] Se analizó la base de datos, notamos que dos de los indicadores socioeconómicos tenían el mismo significado, por lo que decidimos eliminar aquella variable con mayor número de datos faltantes.
 
 - [X] Una vez seleccionadas las variables con las que trabajaremos notamos que los datos contaban únicamente con 32 valores faltantes, decidimos imputar estos valores con ayuda del lengiaje de programación `R`.
 
@@ -42,10 +41,10 @@
 
 - [X] Asiganción de issues para cada integrante.
 
-    - Los issues a asignar son: 
+    - Los issues a asignar son:
 
         - [X] Agregar el link a nuestras AWS instances.
-    
+
         - [X] Separar los datos `base.csv` por años `1990`, `2000` y `2015`
 
         - [X] Crear nuestro el índice de marginación con los pesos obtenidos del análisis de componentes principales.
@@ -55,11 +54,11 @@
         - [X] Reportar resultados en un notebook.
 
         - [X] Crear presentación.
-    
+
         - [X] Agregar ligas hacia el trabajo escrito y presentación
 
 
-## Docker 
+## Docker
 
 - [X] Con Jupyter
 - [ ] Sin Jupyter
@@ -81,7 +80,3 @@
 [Componentes principales en Python](https://towardsdatascience.com/pca-using-python-scikit-learn-e653f8989e60)
 
 [Ejemplo de análisis de componentes principales con R](https://www.cienciadedatos.net/documentos/35_principal_component_analysis)
-
-
-
-
