@@ -297,10 +297,6 @@ Para la clasificación de estos estados se utilizarán K-medias seleccionando 5 
 La función realizada para este análisis de conglomerados es la siguiente: 
 
     def adding_cluster_feature(df_sel, df_type):
-        """
-        """
-
-        ## Selecting the correct data dict according to the df processed.
         if df_type == "orig":
         features = original_features
         elif df_type == "pca":
@@ -310,8 +306,6 @@ La función realizada para este análisis de conglomerados es la siguiente:
         print("Invalid 'df_type' parameter specified.")
         raise
 
-        ## List of features that will be used of the clustering process.
-        
         feats = [feat for feat in features if
                 (features[feat]["feature"] == True) &
                 (features[feat]["selected"] == True)
@@ -323,11 +317,8 @@ La función realizada para este análisis de conglomerados es la siguiente:
             print("{}. {}".format(i, f))
             i += 1
 
-        ## Determining clusters using k-means and attaching column
         kmeans = KMeans(n_clusters=5)
         df_sel["cluster"] = kmeans.fit_predict(df_sel.loc[:, feats])
-
-
         return df_sel
 
 Entre otras funciones auxiliares que nos ayudaron a interpretar estos clusters de manera visual.
@@ -344,8 +335,17 @@ A continuación se mostrarán los resultados obtenidos de K-medias utilizando lo
 knitr::include_graphics("images/1990/1990_base_classif.png")
 ```
 
-### K-medias utilizando los indicadores socioeconóminos 
 
+### K-medias utilizando los indicadores socioeconóminos 
+```{r echo=FALSE,fig.align='center',out.width = "500px", out.height="500px"}
+knitr::include_graphics("images/1990/1990_feature_classif.png")
+```
+
+
+### Matriz de confusión 
+```{r echo=FALSE,fig.align='center',out.width = "500px", out.height="500px"}
+knitr::include_graphics("images/1990/1990_feature_cm.png")
+```
 
 ## PCA
 
@@ -357,14 +357,16 @@ knitr::include_graphics("img/valores_1990.png")
 
 Con la imagen anterior notamos que los valores propios obtenidos con la aproximación de Jacobi son muy parecidos a los obtenidos con la función `np.linalg.eig` de numpy.
 
+Con la imagen anterior notamos que los valores propios obtenidos con la aproximación de Jacobi son muy parecidos a los obtenidos con la función de numpy.
+
 ### Componentes principales
 
 ```{r,echo=FALSE}
 PCA_1990<-read.csv('PCA_1990.csv')
-head(PCA_1990)
+head(PCA_1990, 10)
 ```
 
-Observamos los primeros 6 valores de cada componente principal, para la construcción del índice solo fue necesario usar la primera componente principal.
+Observamos los primeros 10 valores de cada componente principal, para la construcción del índice solo fue necesario usar la primera componente principal.
 
 ### Gráfica dos dimensiones
 
@@ -372,16 +374,43 @@ Observamos los primeros 6 valores de cada componente principal, para la construc
 knitr::include_graphics("img/pca_1990.png")
 ```
 
-Una ventaja de las componentes principales es que nos ayudan a la visualización, podemos pasar de 9 dimensiones a 2 o 3 dimensiones y poder visualizar los datos. Podemos observar que la separación usando las primeras dos componentes es muy buena, ya que podemos apreciar los grados de marginación bien separados.
+Una ventaja de las componentes principales es que nos ayudan a la visualización, podemos pasar de 9 dimensiones a 2 o 3 dimensiones y poder visualizar los datos. Podemos observar que la separación usando las primeras dos componentes es muy buena, ya que podemos apreciar los grados de marginación bien separados. Notamos cierto empalme entre los estados con grado de marginación alto y muy alto.
 
 ### K-medias utilizando componentes principales
 
+```{r echo=FALSE,fig.align='center',out.width = "500px", out.height="500px"}
+knitr::include_graphics("images/1990/1990_pca_classif.png")
+```
+
+
+### Matriz de confusión 
+
+```{r echo=FALSE,fig.align='center',out.width = "500px", out.height="500px"}
+knitr::include_graphics("images/1990/1990_pca_cm.png")
+```
 \newpage
 
 ## Año 2000
 
+```{r echo=FALSE,fig.align='center',out.width = "500px", out.height="500px"}
+knitr::include_graphics("images/2000/2000_base_classif.png")
+```
+
 ### K-medias utilizando los indicadores socioeconóminos 
 
+```{r echo=FALSE,fig.align='center',out.width = "500px", out.height="500px"}
+knitr::include_graphics("images/2000/2000_feature_classif.png")
+```
+
+
+### Matriz de confusión 
+
+```{r echo=FALSE,fig.align='center',out.width = "500px", out.height="500px"}
+knitr::include_graphics("images/2000/2000_feature_cm.png")
+```
+
+
+\newpage
 
 ## PCA
 
@@ -407,12 +436,35 @@ knitr::include_graphics("img/pca_2000.png")
 
 ### K-medias utilizando componentes principales
 
+```{r echo=FALSE,fig.align='center',out.width = "500px", out.height="500px"}
+knitr::include_graphics("images/2000/2000_pca_classif.png")
+```
 
+### Matriz de confusión 
+
+```{r echo=FALSE,fig.align='center',out.width = "500px", out.height="500px"}
+knitr::include_graphics("images/2000/2000_pca_cm.png")
+```
 \newpage
 
 ## Año 2015
+
+```{r echo=FALSE,fig.align='center',out.width = "500px", out.height="500px"}
+
+knitr::include_graphics("images/2010/2010_base_classif.png")
+```
+
 ### K-medias utilizando los indicadores socioeconóminos 
 
+```{r echo=FALSE,fig.align='center',out.width = "500px", out.height="500px"}
+knitr::include_graphics("images/2010/2010_feature_classif.png")
+```
+
+### Matriz de confusión 
+
+```{r echo=FALSE,fig.align='center',out.width = "500px", out.height="500px"}
+knitr::include_graphics("images/2010/2010_feature_cm.png")
+```
 
 ## PCA
 
@@ -442,6 +494,16 @@ Para este año notamos que la "mejor" agrpación en dos dimensiones la pudimos a
 
 ### K-medias utilizando componentes principales
 
+```{r echo=FALSE,fig.align='center',out.width = "500px", out.height="500px"}
+knitr::include_graphics("images/2010/2010_pca_classif.png")
+```
+
+
+### Matriz de confusión 
+
+```{r echo=FALSE,fig.align='center',out.width = "500px", out.height="500px"}
+knitr::include_graphics("images/2010/2010_pca_cm.png")
+```
 
 \newpage
 
