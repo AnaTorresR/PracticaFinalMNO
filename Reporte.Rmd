@@ -11,7 +11,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Objetivo
 
-Se usará análisis de componentes principales para reducir la dimensión de los $9$ indicadores socioeconómicos que forman al índice de marginación, una vez se tenga la reducción de dimensiones se recreará el índice de marginación del Consejo Nacional de la Población. Además se realizaran agrupaciones por el método de k-medias con las variables originales y las obtenidas por el método de componentes principales. 
+Se usará análisis de componentes principales para reducir la dimensión de los $9$ indicadores socioeconómicos que forman al índice de marginación, una vez se tenga la reducción de dimensiones se recreará el índice de marginación del Consejo Nacional de la Población. Además se realizarán agrupaciones por el método de k-medias con las variables originales y las obtenidas por el método de componentes principales.
 
 # Índice de marginación CONAPO
 
@@ -24,31 +24,31 @@ El indice de marginación es un parámetro estadístico que contribuye a la iden
 - Educación:
 
     - Porcentaje de población analfabeta
-    
+
     - Porcentaje de población sin primaria completa
-    
+
 - Vivienda:
 
     - Porcentaje de ocupantes en viviendas sin agua entubada
-    
+
     - Porcentaje de ocupantes en viviendas sin drenaje ni servicio sanitario exclusivo
-    
+
     - Porcentaje de ocupantes en viviendas sin drenaje ni excusado
 
     - Porcentaje de ocupantes en viviendas con algún nivel de hacinamiento
-    
+
     - Porcentaje de ocupantes en viviendas sin energía eléctrica
-    
+
     - Porcentaje de ocupantes en viviendas con piso de tierra
-    
+
 - Distribución de la población:
 
     - Porcentaje de población en localidades con menos de 5,000 habitantes
-    
+
 - Ingresos:
 
     - Porcentaje de población ocupada con ingresos de hasta dos salarios mínimos
-    
+
 
 # Análisis de componentes principales
 
@@ -60,10 +60,10 @@ El análisis de componentes principales se enfoca en las varianzas de las variab
 
 $$\alpha^{'}{1}x = \alpha{11}x_{1} + \alpha_{12}x_{2} + ...  + \alpha_{1p}x_{p} = \sum_{i=1}^{p} \alpha_{1j}x_{j},$$
 
-Después se debe de obtener otra función lineal $\alpha^{'}{2}x$ no correlacionada con la función $\alpha{1}^{'}x$ que también explique la máxima varianza posible. Así, sucesivamente se irán obteniendo estas funciones lineales hasta obtener la k-ésima función lineal $\alpha^{'}{k}x$ que al igual que las $k-1$ funciones lineales obtenidas anteriormente, que explique la máxima varianza posible, siendo ésta no correlacionada con $\alpha^{'}{1}x,\alpha^{'}{2}x,...\alpha^{'}{k-1}x$. La $k$-ésima función corresponde al $k$-ésimo componente principal. Se pueden encontrar hasta $p$ componentes principales pero se desea, en general, que la máxima varianza se encunetre en $m$ componentes componentes principales siendo $m \leq p$. El caso más simple es cuando se tienen dos componentes principales, pues las observaciones puedes ser visualizadas en un plano. Cuando se tienen más componentes principales, la visualización de éstos se dificulta. A lo más se pueden visualizar claramente hasta 3 dimensiones, es decir, hasta 3 componentes. Cuando hay más se podrían visualizar planos de nivel pero se perdería la interpretación
+Después se debe de obtener otra función lineal $\alpha^{'}{2}x$ no correlacionada con la función $\alpha{1}^{'}x$ que también explique la máxima varianza posible. Así, sucesivamente se irán obteniendo estas funciones lineales hasta obtener la k-ésima función lineal $\alpha^{'}{k}x$ que al igual que las $k-1$ funciones lineales obtenidas anteriormente, que explique la máxima varianza posible, siendo ésta no correlacionada con $\alpha^{'}{1}x,\alpha^{'}{2}x,...\alpha^{'}{k-1}x$. La $k$-ésima función corresponde al $k$-ésimo componente principal. Se pueden encontrar hasta $p$ componentes principales pero se desea, en general, que la máxima varianza se encuentre en $m$ componentes principales siendo $m \leq p$. El caso más simple es cuando se tienen dos componentes principales, pues las observaciones pueden ser visualizadas en un plano. Cuando se tienen más componentes principales, la visualización de éstos se dificulta. A lo más se pueden visualizar claramente hasta 3 dimensiones, es decir, hasta 3 componentes. Cuando hay más se podrían visualizar planos de nivel pero se perdería la interpretación
 
 Ya definidos los componentes principales, debemos saber como encontrarlos. Consideremos que el vector de variables aleatorias $X$ tiene matriz de covarianzas $\Sigma$ conocida. Esta matriz, cuyo $(i,j)$-ésimo elemento corresponde a la covarianza entre los elementos $i$ y $j$ de $X$ cuando $i\neq j$, cuando $i=j$ el elemento $(i,j) = (i,i)$ corresponde a la varianza. Cuando $\Sigma$ es desconocida, se reemplaza por la matriz $S$.
-Para $k=1,2,...,p$ el $k$-ésimo componente principal se define de la forma $z_k = \alpha^{'}_{k}x$, donde $\alpha_k$ es el eigenvector o vector propio de $\Sigma$ correspondinete al $k$-ésimo eigenvalor o valor propio mas grande $\lambda_k$. 
+Para $k=1,2,...,p$ el $k$-ésimo componente principal se define de la forma $z_k = \alpha^{'}_{k}x$, donde $\alpha_k$ es el eigenvector o vector propio de $\Sigma$ correspondiente al $k$-ésimo eigenvalor o valor propio mas grande $\lambda_k$.
 
 ## Propiedades de los componentes principales y sus implicaciones
 
@@ -94,8 +94,8 @@ Desafortunadamente no hay forma objetiva para decidir cuántos componentes princ
 
 ### Estandarización de los datos
 
-En el análisis de componentes principales las variables se suelen escalar (estandarizar). Esto es recomendable cuando las variables son medidas en diferentes escalas, si no se realiza la estandarización, los resultados del análisis se verán afectados. 
-El objetivo es hacer las variables comparables. Generalmente las variables se estandarizan para que éstas cuenten con desviación estándar 1 y media cero. También se recomienda escalar los datos cuando la media y desviación estándar de las variables es muy diferente. 
+En el análisis de componentes principales las variables se suelen escalar (estandarizar). Esto es recomendable cuando las variables son medidas en diferentes escalas, si no se realiza la estandarización, los resultados del análisis se verán afectados.
+El objetivo es hacer las variables comparables. Generalmente las variables se estandarizan para que éstas cuenten con desviación estándar 1 y media cero. También se recomienda escalar los datos cuando la media y desviación estándar de las variables es muy diferente.
 
 Cuando se escalan las variables, éstas se transforman de la siguiente manera:
 
@@ -105,7 +105,7 @@ $$\frac{x_i-media(x)}{desv(x)},$$
 
 # Método de Rotaciones de Jacobi para matrices simétricas
 
-Para este proyecto no usaremos las funciones ya programadas, usaremos el método de rotaciones de Jacobi para aproximar los valores propios y los vectores propios y con estos poder calcular las componentes principales.
+Para este proyecto no usaremos las funciones ya programadas, usaremos el método de rotaciones de Jacobi para aproximar los valores propios y los vectores propios y con estos poder calcular los componentes principales de nuestros datos.
 
 Este método produce una secuencia de transformaciones ortogonales de la forma $J_k^TAJ_k$ con el objetivo de hacer “más diagonal” a la matriz $A \in \mathbb{R}^{n \times n}$.
 
@@ -125,12 +125,16 @@ Dados $A$ simétrica y $tol>0$ definimos $A_0=A,Q_0=I_n$, repetimos el siguiente
 
 La matriz $J_k$ se utiliza para eliminar un par de entradas (simétricas) en la matriz $A_k$, esto preserva la simetría de la matriz original. En las columnas de la matriz $Q_k$ se encuentran aproximaciones a los eigenvectores de $A$ y en la diagonal de $A_k$ se tienen aproximaciones a los eigenvalores de $A$.
 
+
+El método de Jacobi  es conveniente para el cálculo manual o con calculadora, pero en la práctica, en el caso de matrices de grandes dimensiones, la búsqueda del elemento de mayor valor absoluto fuera de la diagonal es muy costosa en tiempo de cálculo, tanto o más que los cálculos de la iteración en sí, por lo que es más conveniente anular los elementos fuera de la diagonal mediante ciclos sistemáticos o barridos.
+
+En el caso de matrices de pequeña dimensión se elimina el elemento de fuera de la diagonal de mayor módulo. Para grandes dimensiones se realiza una eliminación por ciclos. Otra posibilidad es plantear el problema de diagonalizar una matriz compleja de n dimensiones como el de diagonalizar una matriz real de 2n dimensiones.
+
 # K-medias
 
 El clustering de particiones son métodos de agrupamiento para clasificar observaciones dentro del conjunto de datos en multiples grupos basados en su similaridad, ya que se desconoce de manera inicial tanto el número total de grupos, como en donde se encuentra cada observación en particular. Los algoritmos requieren que el analista especifique el número de grupos que se desea generar.
 
-$K$-medias es el algoritmo no supervisado más común para particionar datos dados en un conjunto de $k$ grupos, es decir, $k$ clusters, en donde $k$ representa el número de grupos pre especificados por el analista. Éste algoritmo clasifica objetos en múltiples grupos tal que los objetos dentro del mismo
-grupo son lo más similares posibles (alta similaridad dentro de las clases), mientras que los objetos de diferentes grupos son lo más disimilares posible (baja similaridad entre clases). En $k$ medias, cada cluster es representado por su centro (centroide) el cual corresponde a la media de los puntos asignados a ese grupo.
+$K$-medias es el algoritmo no supervisado más común para particionar datos dados en un conjunto de $k$ grupos, es decir, $k$ clusters, en donde $k$ representa el número de grupos pre especificados por el analista. Éste algoritmo clasifica objetos en múltiples grupos tal que los objetos dentro del mismo grupo son lo más similares posibles (alta similaridad dentro de las clases), mientras que los objetos de diferentes grupos son lo más disimilares posible (baja similaridad entre clases). En $k$ medias, cada cluster es representado por su centro (centroide) el cual corresponde a la media de los puntos asignados a ese grupo.
 
 La idea básica detrás de $k$-medias consiste en definir grupos de tal forma que la variación total dentro de cada grupo (conocida como variación total entre clusters) se minimice.
 
@@ -154,11 +158,25 @@ El primer paso para usar el algoritmo de $k$-medias es indicar el número de con
 
 El algoritmo comienza con una selección aleatoria de $k$ observaciones del conjunto de datos, estos servirán como los centros iniciales de los grupos. Las observaciones seleccionadas son también conocidas como las medias de los conglomerados o centroides.
 
-El siguiente paso es asignar cada una de las observaciones restantes al centroide más cercano a ellas, esto se define utilizando la distancia euclideana entre la observación y el centroide. Este paso se llama *asignación de grupo*. 
+El siguiente paso es asignar cada una de las observaciones restantes al centroide más cercano a ellas, esto se define utilizando la distancia euclideana entre la observación y el centroide. Este paso se llama *asignación de grupo*.
 
-Después del paso de asignación , el algoritmo computa el nuevo valor medio de cada grupo. El término *actualización del centroide* es utilizado para diseñar este paso. Ahora que los centros han sido recalculados, cada observación se revisa nuevamente con el fin de verificar si éstas pueden estar cercanas a un grupo diferente. Todas las observaciones son reasignadas nuevamente usando las medias actualizadas de cada grupo
+Después del paso de asignación , el algoritmo computa el nuevo valor medio de cada grupo. El término *actualización del centroide* es utilizado para diseñar este paso. Ahora que los centros han sido re calculados, cada observación se revisa nuevamente con el fin de verificar si éstas pueden estar cercanas a un grupo diferente. Todas las observaciones son reasignadas nuevamente usando las medias actualizadas de cada grupo
 
-La asignación de grupo y la actualización del centroide son pasos iterativos hasta que la asignación de grupo deje de cambiar (hasta que se logra una convergencia). Esto es, los grupos formados en la iteración actual son los mismo que se obtuvieron en la iteración previa. 
+La asignación de grupo y la actualización del centroide son pasos iterativos hasta que la asignación de grupo deje de cambiar (hasta que se logra una convergencia). Esto es, los grupos formados en la iteración actual son los mismo que se obtuvieron en la iteración previa.
+
+
+El algoritmo de $k$-medias se puede resumir de la siguiente manera:\\
+
+1. Especificar el n\'umero de conglomerados ($k$) a crear (por el analista)\\
+
+2. Selecciona aleatoriamente $k$ objetos del conjunto de datos como los centroides o medias  iniciales.\\
+
+3. Asigna cada observaci\'on al centroide m\'as cercano, basado en la distancia euclideana entre el objeto y el centroide.\\
+
+4. Se actualiza el centroide de cada uno de los $k$ grupos calculando los nuevos valores medios de todas las observaciones en el grupo. El centroide del $k$-\'esimo grupo es un vector de tamaño $p$ que contiene las medias de todas las variables para las observaciones que se encuentran en el $k$-\'esimo grupo; $p$ es el n\'umero de variables.\\
+
+5. La suma de cuadrados se minimiza iterativamente. Esto es, se iteran los pasos 3 y 4 hasta que la asignaci\'on de grupos deje de cambiar o hasta que se cumpla el n\'umero m\'aximo de iteraciones.
+
 
 ## Ventajas y desventajas de k-medias
 
@@ -166,11 +184,11 @@ $K$-medias es un algoritmo simple y rápido. Puede trabajar eficientemente con g
 
 - Asume conocimiento previo de los datos y requiere que el analista elija el número apropiado de grupos.
 
-- Los resultados finales son sensibles a la selección inicial aleatoria de centrides. Esto es un problema debido a que en cada iteración del algoritmo se seleccionará (con alta frecuencia) diferentes centroides iniciales aunque se esté trabajando con un sólo conjunto de datos. Esto puede dirigir a diferentes resultados de conglomerados en diferentes iteraciones.
+- Los resultados finales son sensibles a la selección inicial aleatoria de centroides. Esto es un problema debido a que en cada iteración del algoritmo se seleccionará (con alta frecuencia) diferentes centroides iniciales aunque se esté trabajando con un sólo conjunto de datos. Esto puede dirigir a diferentes resultados de conglomerados en diferentes iteraciones.
 
 - Es sensible con valores atípicos.
 
--  Si se reacomodan los datos, es posible que se obtenga una solución diferente cada que se ordenen los datos.
+-  Si se re acomodan los datos, es posible que se obtenga una solución diferente cada que se ordenen los datos.
 
 
 \newpage
@@ -179,7 +197,7 @@ $K$-medias es un algoritmo simple y rápido. Puede trabajar eficientemente con g
 
 En primer lugar usamos la función que se desarrolló en la segunda parte de la práctica 1 para aproximar los valores propios y los vecores propios, despues con estos vectores propios se calculan las componenes principales. Ya con los componentes principales creamos nuestro indice con el primer componente.
 
-Se analizaron los indicadores socioeconómicos de los años 1990, 2000 y 2015, realizamos una reducción de dimensiones por medio de análisis de componentes principales. Para poder realizar esto se hizo uso del algoritmo de método de rotaciones de Jacobi estudiado en clase. 
+Se analizaron los indicadores socioeconómicos de los años 1990, 2000 y 2015, realizamos una reducción de dimensiones por medio de análisis de componentes principales. Para poder realizar esto se hizo uso del algoritmo de método de rotaciones de Jacobi estudiado en clase.
 
 
       def sign(x):
@@ -230,8 +248,8 @@ Se analizaron los indicadores socioeconómicos de los años 1990, 2000 y 2015, r
       J[idx1, idx2] = s
       J[idx2, idx1] = -s
       return J
-      
-Para estos tres años se tuvieron que realizar entre 3 y 4 sweeps con las siguientes iteraciones utilizando la matriz de varianzas y covarianzas de las variables estandarizadas: 
+
+Para estos tres años se tuvieron que realizar entre 3 y 4 sweeps con las siguientes iteraciones utilizando la matriz de varianzas y covarianzas de las variables estandarizadas:
 
     (1,2),(1,3),(1,4),(1,5),(1,6),(1,7), (1,8),(1,9),
 
@@ -248,8 +266,8 @@ Para estos tres años se tuvieron que realizar entre 3 y 4 sweeps con las siguie
      (7,8), (7,9),
 
      (8,9)
-     
-Una vez realizados los sweeps obtenemos la matriz A diagonalizada, en esta matriz se encuentran los valores propios de la matriz de covarianzas. Decidimos comparar los valores propios obtenidos por nuestra función con los valores propios obtenidos por la función de `Python np.linalg.eig()`. Observamos que nuestros resultados son aproximadamente iguales a los valores propios proporcionados a la función de `numpy`. 
+
+Una vez realizados los sweeps obtenemos la matriz A diagonalizada, en esta matriz se encuentran los valores propios de la matriz de covarianzas. Decidimos comparar los valores propios obtenidos por nuestra función con los valores propios obtenidos por la función de `Python np.linalg.eig()`. Observamos que nuestros resultados son aproximadamente iguales a los valores propios proporcionados a la función de `numpy`.
 
 Para obtener la matriz de vectores propios utilizamos la siguiente función:
 
@@ -277,31 +295,31 @@ Para obtener la matriz de vectores propios utilizamos la siguiente función:
       return Qk
 
 
-Lo siguiente que realizamos fue ordenar de manera descendente los valores propios, de tal forma que la matriz de vectores propios contenga el vector propio cuyo valor propio es el más alto, y así sucesivamente. 
-Para la creación de la matriz de PCA realizamos la multiplicación entre la matriz de vectores propios y los datos que contienen a los indicadores socioeconómicos estandarizados. Así obtenemos una matrix de $32x9$. 
+Lo siguiente que realizamos fue ordenar de manera descendente los valores propios, de tal forma que la matriz de vectores propios contenga el vector propio cuyo valor propio es el más alto, y así sucesivamente.
+Para la creación de la matriz de PCA realizamos la multiplicación entre la matriz de vectores propios y los datos que contienen a los indicadores socioeconómicos estandarizados. Así obtenemos una matrix de $32x9$.
 
-Posteriormente se analizó la varianza explicada por estas nuevas dimensiones. El porcentaje de varianza explicada se realizó de la siguiente manera en `Python`: 
+Posteriormente se analizó la varianza explicada por estas nuevas dimensiones. El porcentaje de varianza explicada se realizó de la siguiente manera en `Python`:
 
 
       explained_variances = []
       for i in range (len(eig)):
           explained_variances.append(eig[i]/np.sum(eig))
       print(explained_variances)
-     
+
 
 Obtuvimos un nuevo índice de marginación con el primer componente principal, y finalmente se interpretó gráficamente el comportamiento de los primeros dos componentes principales coloreados por el grado de marginación. En la siguiente sección del reporte se mostrarán los resultados obtenidos.
 
 Para la clasificación de estos estados se utilizarán K-medias seleccionando 5 grupos que hacen referencia a los grados de marginación `Muy bajo`, `Bajo`, `Medio`, `Alto` y `Muy alto`. Por medio de matrices de confusiones analizaremos elindice creado con la primer componente principal, se desea que estos nuevos componentes agrupen a los estados según su grado de marginación, es decir, parecido a la agrupación de k-medias obtenida por los 9 indicadores socioeconómicos .
 
 
-La función realizada para este análisis de conglomerados es la siguiente: 
+La función realizada para este análisis de conglomerados es la siguiente:
 
     def adding_cluster_feature(df_sel, df_type):
         if df_type == "orig":
         features = original_features
         elif df_type == "pca":
         features = pca_features
-        
+
         else:
         print("Invalid 'df_type' parameter specified.")
         raise
@@ -310,7 +328,7 @@ La función realizada para este análisis de conglomerados es la siguiente:
                 (features[feat]["feature"] == True) &
                 (features[feat]["selected"] == True)
                 ]
-  
+
         print("Features fed for clustering analysis ({}):".format(len(feats)))
         i = 1
         for f in feats:
@@ -325,31 +343,31 @@ Entre otras funciones auxiliares que nos ayudaron a interpretar estos clusters d
 
 \newpage
 
-# Resultados 
+# Resultados
 
 A continuación se mostrarán los resultados obtenidos de K-medias utilizando los 9 indicadores socioeconómicos en una matriz de confusión. Posteriormente mostraremos los resultados obtenidos de componentes principales como valores propios, matriz de componentes principlaes y una representación visual en dos dimensiones de los componentes principales que suponemos fueron los que mejor agruparon a las 32 observaciones.
- 
-## Año 1990 
+
+## Año 1990
 
 ```{r echo=FALSE,fig.align='center',out.width = "500px", out.height="500px"}
 knitr::include_graphics("images/1990/1990_base_classif.png")
 ```
 
 
-### K-medias utilizando los indicadores socioeconóminos 
+### K-medias utilizando los indicadores socioeconóminos
 ```{r echo=FALSE,fig.align='center',out.width = "500px", out.height="500px"}
 knitr::include_graphics("images/1990/1990_feature_classif.png")
 ```
 
 
-### Matriz de confusión 
+### Matriz de confusión
 ```{r echo=FALSE,fig.align='center',out.width = "500px", out.height="500px"}
 knitr::include_graphics("images/1990/1990_feature_cm.png")
 ```
 
 ## PCA
 
-### Valores propios 
+### Valores propios
 
 ```{r echo=FALSE,fig.align='center',fig.align='center',out.width = "500px", out.height="500px"}
 knitr::include_graphics("img/valores_1990.png")
@@ -383,7 +401,7 @@ knitr::include_graphics("images/1990/1990_pca_classif.png")
 ```
 
 
-### Matriz de confusión 
+### Matriz de confusión
 
 ```{r echo=FALSE,fig.align='center',out.width = "500px", out.height="500px"}
 knitr::include_graphics("images/1990/1990_pca_cm.png")
@@ -396,14 +414,14 @@ knitr::include_graphics("images/1990/1990_pca_cm.png")
 knitr::include_graphics("images/2000/2000_base_classif.png")
 ```
 
-### K-medias utilizando los indicadores socioeconóminos 
+### K-medias utilizando los indicadores socioeconóminos
 
 ```{r echo=FALSE,fig.align='center',out.width = "500px", out.height="500px"}
 knitr::include_graphics("images/2000/2000_feature_classif.png")
 ```
 
 
-### Matriz de confusión 
+### Matriz de confusión
 
 ```{r echo=FALSE,fig.align='center',out.width = "500px", out.height="500px"}
 knitr::include_graphics("images/2000/2000_feature_cm.png")
@@ -414,7 +432,7 @@ knitr::include_graphics("images/2000/2000_feature_cm.png")
 
 ## PCA
 
-### Valores propios 
+### Valores propios
 
 ```{r echo=FALSE,fig.align='center',fig.align='center',out.width = "500px", out.height="500px"}
 knitr::include_graphics("img/valores_2000.png")
@@ -440,7 +458,7 @@ knitr::include_graphics("img/pca_2000.png")
 knitr::include_graphics("images/2000/2000_pca_classif.png")
 ```
 
-### Matriz de confusión 
+### Matriz de confusión
 
 ```{r echo=FALSE,fig.align='center',out.width = "500px", out.height="500px"}
 knitr::include_graphics("images/2000/2000_pca_cm.png")
@@ -454,13 +472,13 @@ knitr::include_graphics("images/2000/2000_pca_cm.png")
 knitr::include_graphics("images/2010/2010_base_classif.png")
 ```
 
-### K-medias utilizando los indicadores socioeconóminos 
+### K-medias utilizando los indicadores socioeconóminos
 
 ```{r echo=FALSE,fig.align='center',out.width = "500px", out.height="500px"}
 knitr::include_graphics("images/2010/2010_feature_classif.png")
 ```
 
-### Matriz de confusión 
+### Matriz de confusión
 
 ```{r echo=FALSE,fig.align='center',out.width = "500px", out.height="500px"}
 knitr::include_graphics("images/2010/2010_feature_cm.png")
@@ -468,7 +486,7 @@ knitr::include_graphics("images/2010/2010_feature_cm.png")
 
 ## PCA
 
-### Valores propios 
+### Valores propios
 
 ```{r echo=FALSE,fig.align='center',fig.align='center',out.width = "500px", out.height="500px"}
 knitr::include_graphics("img/valores_2015.png")
@@ -499,7 +517,7 @@ knitr::include_graphics("images/2010/2010_pca_classif.png")
 ```
 
 
-### Matriz de confusión 
+### Matriz de confusión
 
 ```{r echo=FALSE,fig.align='center',out.width = "500px", out.height="500px"}
 knitr::include_graphics("images/2010/2010_pca_cm.png")
@@ -509,9 +527,9 @@ knitr::include_graphics("images/2010/2010_pca_cm.png")
 
 # Conclusiones
 
-Notamos que para los tres años que decidimos estudiar los valores propios de la matrz de covarianza de cada año no presentaban cambios drásticos. Los primeros dos componentes principales explicaban aproximadamente el 80% de varianza. 
+Notamos que para los tres años que decidimos estudiar los valores propios de la matrz de covarianza de cada año no presentaban cambios drásticos. Los primeros dos componentes principales explicaban aproximadamente el 80% de varianza.
 
-Como se muestra en la sección de resultados, los estados que presentan tasas de error más altas son los clasificados con un grado de maeginación medio y alto. 
+Como se muestra en la sección de resultados, los estados que presentan tasas de error más altas son los clasificados con un grado de maeginación medio y alto.
 
 Mientras que los estados con grado de marginación bajo y muy bajo fueron los estados mejor agrupados según el método de k-means.
 
@@ -526,4 +544,3 @@ Analysis. Second Edition. Volumen 2. Springer.
 - CONAPO (2010) Índice de marginación por Entidad Federativa. Consejo Nacional de Población México, DF.
 
 - [Notas del curso](https://itam-ds.github.io/analisis-numerico-computo-cientifico/II.computo_matricial/2.3/Algoritmos_y_aplicaciones_de_eigenvalores_eigenvectores_de_una_matriz.html)
-
