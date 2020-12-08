@@ -428,12 +428,15 @@ Al igual que en las variables originales los grupos que se forman con una clasif
 knitr::include_graphics("images/2000/2000_base_classif.png")
 ```
 
+Notamos que para el año 2000, el estado de Durango pasó de tener un gardo de marginación "Alto" a un grado "Medio", mientras que Puebla pasó de tener un grado de marginación "Muy alto" a "Alto" y finalmente el estado de Coahuila pasó de tener un gardo de marginación "Bajo" a "Muy bajo".
+
 ### K-medias utilizando los indicadores socioeconóminos
 
 ```{r echo=FALSE,fig.align='center',out.width = "500px", out.height="500px"}
 knitr::include_graphics("images/2000/2000_feature_classif.png")
 ```
 
+Observamos que las tasas de error de agrupación más grandes corresponden a los grados "Medio" y "Alto" seguido del grado "Muy alto". Por otro lado el algoritmo de K-medias agrupó de manera exacta a los 4 estados de la República con los gardos de marginación mas bajos.
 
 ### Matriz de confusión
 
@@ -441,6 +444,7 @@ knitr::include_graphics("images/2000/2000_feature_classif.png")
 knitr::include_graphics("images/2000/2000_feature_cm.png")
 ```
 
+Esta matriz de confusión es una manera visual de interpretar el agrupamiento de los estados, la interpretación es la misma a la explicada en la tabla anterior.
 
 \newpage
 
@@ -452,6 +456,7 @@ knitr::include_graphics("images/2000/2000_feature_cm.png")
 knitr::include_graphics("img/valores_2000.png")
 ```
 
+Observamos que solamente contamos con un valor propio mayor a uno, si nuestro criterio de selección de componentes a trabajar es por medio de eigen valores  se seleccionaria solamente la primera componente principal.
 
 ### Componentes principales
 
@@ -460,11 +465,15 @@ PCA_2000<-read.csv('data/PCA_2000.csv')
 head(PCA_2000)
 ```
 
+En esta tabla mostramos las primeras cargas de los componentes principales, estos pesos se obtuvieron al realizar el producto de matrices entre la matriz de eigenvectores traspuesta y la matriz con las variables originales escaladas teniendo asi una matriz de 32x9.
+
 ### Gráfica dos dimensiones
 
 ```{r echo=FALSE,fig.align='center',out.width = "500px", out.height="500px"}
 knitr::include_graphics("img/pca_2000.png")
 ```
+
+Tras un análisis visual de las dos primeras componentes, observamos que los estados con grado de marginación "Muy bajo" y "Bajo" se encuentran bien agrupados, sin embargo notamos que el resto de los grupos no estan tan bien definidos.
 
 ### K-medias utilizando componentes principales
 
@@ -472,11 +481,18 @@ knitr::include_graphics("img/pca_2000.png")
 knitr::include_graphics("images/2000/2000_pca_classif.png")
 ```
 
+Volvemos a utilizar el algoritmo de k-medias para comparar si las clasificaciones de los estados por su grado de marginación presentan tasas de error menores a las tasas obtenidas anteriormente. 
+Notamos que el grupo "Alto" fue el que presentó un error de agrupación más alto que el resto de los grupos, seguido del grupo con grado de marginación "Medio". 
+Nuevamente, los estados con grado de marginación "Muy bajo" fueron perfectamente agrupados.
+
 ### Matriz de confusión
 
 ```{r echo=FALSE,fig.align='center',out.width = "500px", out.height="500px"}
 knitr::include_graphics("images/2000/2000_pca_cm.png")
 ```
+
+Finalmente, interpretamos de manera visual el agrupamiento de los estados utilizando componentes principales y k-medias.
+
 \newpage
 
 ## Año 2015
@@ -486,11 +502,19 @@ knitr::include_graphics("images/2000/2000_pca_cm.png")
 knitr::include_graphics("images/2010/2010_base_classif.png")
 ```
 
+De este año notamos que la mayoría de los estados cuentan con grados de marginación "Medio" y "Alto".
+Los estados de Chiapas, Guerrero y Oaxaca han formado parte del grupo cuyos grados de marginación son los más altos durante estos años de estudio.
+Del mismo modo, los estados con grado de marginación "Muy bajo" han sido los mismos durante todos estos años.
+
 ### K-medias utilizando los indicadores socioeconóminos
 
 ```{r echo=FALSE,fig.align='center',out.width = "500px", out.height="500px"}
 knitr::include_graphics("images/2010/2010_feature_classif.png")
 ```
+
+
+Notamos ahora que la agrupación de estados con un grado de marginación "Medio" fue el grupo que más errores presentó en esta agrupación seguido del grado de marginación "Alto".
+Ahora, los grupos de grados de marginación "Muy bajo" y "Muy alto" fueron clasificados de manera correcta según los datos del CONAPO. A continuación podemos ver lo descrito de forma visual.
 
 ### Matriz de confusión
 
@@ -506,6 +530,7 @@ knitr::include_graphics("images/2010/2010_feature_cm.png")
 knitr::include_graphics("img/valores_2015.png")
 ```
 
+Al igual que los años anteriormente estudiados contamos que un eigenvalor mayor a uno, esto también significa que este primer componente principal contiene la mayor proporción de varianza explicada.
 
 ### Componentes principales
 
@@ -514,6 +539,7 @@ PCA_2015<-read.csv('data/PCA_2015.csv')
 head(PCA_2015)
 ```
 
+Observamos los pesos de nuestras nuevas dimensiones, si, si nos quedamos únicamente con el primer componente principal, estos pesos serían nuestros nuevos índices de marginación para los estados.
 
 ### Gráfica dos dimensiones
 
@@ -521,6 +547,8 @@ head(PCA_2015)
 ```{r echo=FALSE,fig.align='center',out.width = "500px", out.height="500px"}
 knitr::include_graphics("img/pca_2015.png")
 ```
+
+Durante el estudio de este año se observó que los componentes que "mejor agrupaban" nuestras observaciones eran el segundo y el cuarto, sin embargo notamos el mismo problema que en los años pasados, están bien definidos los grupos, suponemos que para este año tendremos los errores de clasificación más altos
 
 Para este año notamos que la "mejor" agrpación en dos dimensiones la pudimos analizar con el segundo y el cuarto componente principal.
 
@@ -530,6 +558,7 @@ Para este año notamos que la "mejor" agrpación en dos dimensiones la pudimos a
 knitr::include_graphics("images/2010/2010_pca_classif.png")
 ```
 
+En efecto, los grupos "Bajo", "Medio" y "Alto" presentan errores de agrupación, siendo el grupo asignado al grado de marginación "medio" el grupo con más error de agrupación.
 
 ### Matriz de confusión
 
@@ -541,11 +570,13 @@ knitr::include_graphics("images/2010/2010_pca_cm.png")
 
 # Conclusiones
 
-Notamos que para los tres años que decidimos estudiar los valores propios de la matrz de covarianza de cada año no presentaban cambios drásticos. Los primeros dos componentes principales explicaban aproximadamente el 80% de varianza.
+Notamos que para los tres años que decidimos estudiar los valores propios de la matriz de covarianza de cada año no presentaban cambios drásticos. Los primeros dos componentes principales explicaban aproximadamente el 80% de varianza.
 
-Como se muestra en la sección de resultados, los estados que presentan tasas de error más altas son los clasificados con un grado de maeginación medio y alto.
+Como se muestra en la sección de resultados, los estados que presentan tasas de error más altas son los clasificados con un grado de marginación medio y alto.
 
-Mientras que los estados con grado de marginación bajo y muy bajo fueron los estados mejor agrupados según el método de k-means.
+Mientras que los estados con grado de marginación bajo y muy bajo fueron los estados mejor agrupados según el método de k-means, lo anterior tiene sentido pues esto también ocurrió con las variables originales.
+
+Si hubiésemos decidido trabajar solo con los componentes principales cuyos valores propios mayores a uno utilizaríamos este componente princial como nuestro nuevo Índice de marginación, sin embargo, tras este análisis de agrupación por el método de k-medias no notamos una agrupación mejor que la que obtuvimos al realizar este mismo algoritmo con los indicadores socioeconómicos, salvo en casos particulares .
 
 
 # Referencias
