@@ -380,7 +380,7 @@ Con la imagen anterior notamos que los valores propios obtenidos con la aproxima
 ### Componentes principales
 
 ```{r,echo=FALSE}
-PCA_1990<-read.csv('PCA_1990.csv')
+PCA_1990<-read.csv('data/PCA_1990.csv')
 head(PCA_1990, 10)
 ```
 
@@ -442,7 +442,7 @@ knitr::include_graphics("img/valores_2000.png")
 ### Componentes principales
 
 ```{r,echo=FALSE}
-PCA_2000<-read.csv('PCA_2000.csv')
+PCA_2000<-read.csv('data/PCA_2000.csv')
 head(PCA_2000)
 ```
 
@@ -496,7 +496,7 @@ knitr::include_graphics("img/valores_2015.png")
 ### Componentes principales
 
 ```{r,echo=FALSE}
-PCA_2015<-read.csv('PCA_2015.csv')
+PCA_2015<-read.csv('data/PCA_2015.csv')
 head(PCA_2015)
 ```
 
