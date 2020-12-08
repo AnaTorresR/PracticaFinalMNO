@@ -58,9 +58,9 @@ Sea $x$ un vector de $p$ variables de donde se desea estudiar la estructura de l
 
 El análisis de componentes principales se enfoca en las varianzas de las variables, aunque  no ignora las correlaciones ni covarianzas de estas. El primer paso es obtener una función lineal de la forma $\alpha_{1}^{'}x$ de los elementos de $x$ que explique la varianza máxima, donde $\alpha_1$ es un vector de $p$ constantes $\alpha_{11},\alpha_{12},...,\alpha_{1p}$, es decir:
 
-$$\alpha^{'}{1}x = \alpha{11}x_{1} + \alpha_{12}x_{2} + ...  + \alpha_{1p}x_{p} = \sum_{i=1}^{p} \alpha_{1j}x_{j},$$
+$$\alpha^{'}_{1}x = \alpha_{11}x_{1} + \alpha_{12}x_{2} + ...  + \alpha_{1p}x_{p} = \sum_{j=1}^{p} \alpha_{1j}x_{j},$$
 
-Después se debe de obtener otra función lineal $\alpha^{'}{2}x$ no correlacionada con la función $\alpha{1}^{'}x$ que también explique la máxima varianza posible. Así, sucesivamente se irán obteniendo estas funciones lineales hasta obtener la k-ésima función lineal $\alpha^{'}{k}x$ que al igual que las $k-1$ funciones lineales obtenidas anteriormente, que explique la máxima varianza posible, siendo ésta no correlacionada con $\alpha^{'}{1}x,\alpha^{'}{2}x,...\alpha^{'}{k-1}x$. La $k$-ésima función corresponde al $k$-ésimo componente principal. Se pueden encontrar hasta $p$ componentes principales pero se desea, en general, que la máxima varianza se encuentre en $m$ componentes principales siendo $m \leq p$. El caso más simple es cuando se tienen dos componentes principales, pues las observaciones pueden ser visualizadas en un plano. Cuando se tienen más componentes principales, la visualización de éstos se dificulta. A lo más se pueden visualizar claramente hasta 3 dimensiones, es decir, hasta 3 componentes. Cuando hay más se podrían visualizar planos de nivel pero se perdería la interpretación
+Después se debe de obtener otra función lineal $\alpha^{'}_{2}x$ no correlacionada con la función $\alpha{1}^{'}x$ que también explique la máxima varianza posible. Así, sucesivamente se irán obteniendo estas funciones lineales hasta obtener la k-ésima función lineal $\alpha^{'}_{k}x$ que al igual que las $k-1$ funciones lineales obtenidas anteriormente, que explique la máxima varianza posible, siendo ésta no correlacionada con $\alpha^{'}_{1}x,\alpha^{'}_{2}x,...\alpha^{'}_{k-1}x$. La $k$-ésima función corresponde al $k$-ésimo componente principal. Se pueden encontrar hasta $p$ componentes principales pero se desea, en general, que la máxima varianza se encuentre en $m$ componentes principales siendo $m \leq p$. El caso más simple es cuando se tienen dos componentes principales, pues las observaciones pueden ser visualizadas en un plano. Cuando se tienen más componentes principales, la visualización de éstos se dificulta. A lo más se pueden visualizar claramente hasta 3 dimensiones, es decir, hasta 3 componentes. Cuando hay más se podrían visualizar planos de nivel pero se perdería la interpretación
 
 Ya definidos los componentes principales, debemos saber como encontrarlos. Consideremos que el vector de variables aleatorias $X$ tiene matriz de covarianzas $\Sigma$ conocida. Esta matriz, cuyo $(i,j)$-ésimo elemento corresponde a la covarianza entre los elementos $i$ y $j$ de $X$ cuando $i\neq j$, cuando $i=j$ el elemento $(i,j) = (i,i)$ corresponde a la varianza. Cuando $\Sigma$ es desconocida, se reemplaza por la matriz $S$.
 Para $k=1,2,...,p$ el $k$-ésimo componente principal se define de la forma $z_k = \alpha^{'}_{k}x$, donde $\alpha_k$ es el eigenvector o vector propio de $\Sigma$ correspondiente al $k$-ésimo eigenvalor o valor propio mas grande $\lambda_k$.
@@ -165,17 +165,17 @@ Después del paso de asignación , el algoritmo computa el nuevo valor medio de 
 La asignación de grupo y la actualización del centroide son pasos iterativos hasta que la asignación de grupo deje de cambiar (hasta que se logra una convergencia). Esto es, los grupos formados en la iteración actual son los mismo que se obtuvieron en la iteración previa.
 
 
-El algoritmo de $k$-medias se puede resumir de la siguiente manera:\\
+El algoritmo de $k$-medias se puede resumir de la siguiente manera:
 
-1. Especificar el n\'umero de conglomerados ($k$) a crear (por el analista)\\
+1. Especificar el número de conglomerados ($k$) a crear (por el analista)
 
-2. Selecciona aleatoriamente $k$ objetos del conjunto de datos como los centroides o medias  iniciales.\\
+2. Selecciona aleatoriamente $k$ objetos del conjunto de datos como los centroides o medias  iniciales.
 
-3. Asigna cada observaci\'on al centroide m\'as cercano, basado en la distancia euclideana entre el objeto y el centroide.\\
+3. Asigna cada observación al centroide más cercano, basado en la distancia euclideana entre el objeto y el centroide.
 
-4. Se actualiza el centroide de cada uno de los $k$ grupos calculando los nuevos valores medios de todas las observaciones en el grupo. El centroide del $k$-\'esimo grupo es un vector de tamaño $p$ que contiene las medias de todas las variables para las observaciones que se encuentran en el $k$-\'esimo grupo; $p$ es el n\'umero de variables.\\
+4. Se actualiza el centroide de cada uno de los $k$ grupos calculando los nuevos valores medios de todas las observaciones en el grupo. El centroide del $k$-ésimo grupo es un vector de tamaño $p$ que contiene las medias de todas las variables para las observaciones que se encuentran en el $k$-ésimo grupo; $p$ es el número de variables.
 
-5. La suma de cuadrados se minimiza iterativamente. Esto es, se iteran los pasos 3 y 4 hasta que la asignaci\'on de grupos deje de cambiar o hasta que se cumpla el n\'umero m\'aximo de iteraciones.
+5. La suma de cuadrados se minimiza iterativamente. Esto es, se iteran los pasos 3 y 4 hasta que la asignación de grupos deje de cambiar o hasta que se cumpla el número máximo de iteraciones.
 
 
 ## Ventajas y desventajas de k-medias
@@ -353,17 +353,27 @@ A continuación se mostrarán los resultados obtenidos de K-medias utilizando lo
 knitr::include_graphics("images/1990/1990_base_classif.png")
 ```
 
+La tabla anterior nos muestra la clasificación dada por el indice de marginación del CONAPO, tenemos 3 estados clasificados como “Muy_bajo”, 10 estados como “Bajo”, 4 como “medio”,  9 como “Alto” y 6 como “muy_alto”.
 
-### K-medias utilizando los indicadores socioeconóminos
+\newpage
+
+## K-medias utilizando los indicadores socioeconóminos
+
+Ya conocemos el número de grupos que tenemos, por lo que no es necesario experimentar con este. Si formamos grupos con las variables originales obtenemos lo siguiente:
+
 ```{r echo=FALSE,fig.align='center',out.width = "500px", out.height="500px"}
 knitr::include_graphics("images/1990/1990_feature_classif.png")
 ```
 
+Es sencillo ver el desempeño del algoritmo con la tabla agregada, notamos que la clasificación se complica en estados que tienen clasificación de “Medio” a "Muy alto".
 
-### Matriz de confusión
+## Matriz de confusión
 ```{r echo=FALSE,fig.align='center',out.width = "500px", out.height="500px"}
 knitr::include_graphics("images/1990/1990_feature_cm.png")
 ```
+
+Con la matriz de confusión es aun más sencilla observar el desempeño del modelo.
+
 
 ## PCA
 
@@ -375,7 +385,6 @@ knitr::include_graphics("img/valores_1990.png")
 
 Con la imagen anterior notamos que los valores propios obtenidos con la aproximación de Jacobi son muy parecidos a los obtenidos con la función `np.linalg.eig` de numpy.
 
-Con la imagen anterior notamos que los valores propios obtenidos con la aproximación de Jacobi son muy parecidos a los obtenidos con la función de numpy.
 
 ### Componentes principales
 
@@ -400,12 +409,17 @@ Una ventaja de las componentes principales es que nos ayudan a la visualización
 knitr::include_graphics("images/1990/1990_pca_classif.png")
 ```
 
+Usando componentes principales obtenemos resultados parecidos que con la variables originales, la clasificación sigue sin ser clara en los grupos de “Medio” a “Muy alto”.
+
 
 ### Matriz de confusión
 
 ```{r echo=FALSE,fig.align='center',out.width = "500px", out.height="500px"}
 knitr::include_graphics("images/1990/1990_pca_cm.png")
 ```
+
+Al igual que en las variables originales los grupos que se forman con una clasificación de “Muy bajo” y “Bajo” estan mejor definidos que los grupos de de las clasificaciones restantes.
+
 \newpage
 
 ## Año 2000
