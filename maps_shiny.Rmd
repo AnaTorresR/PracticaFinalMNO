@@ -1,0 +1,108 @@
+---
+title: "Mapas IM"
+output: 
+  flexdashboard::flex_dashboard:
+    theme: spacelab
+    orientation: rows
+    vertical_layout: scroll
+    horizontal_layout: scroll
+    
+runtime: shiny
+---
+
+
+```{r setup, include=FALSE, message=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(shiny)
+library(flexdashboard)
+library("sf")
+library("sp")
+library("raster")
+library("st")
+library("tmap")
+```
+
+
+# Año 1990
+
+row{data-height=65}
+-----------------------
+
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE, include=FALSE}
+base_espacial_90 <-st_read("data/Mapa_de_grado_de_marginacion_por_entidad_federativa_1990/IMEF_1990/IMEF_1990.shp")
+```
+
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+selectInput("poligonos", label="Colorear por:", choices = names(base_espacial_90))
+
+```
+
+
+row {height=1000}
+-------------------------------------------------------------------------------------------
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+renderPlot(tm_shape(base_espacial_90)+
+  tm_polygons(input$poligonos)+
+  tmap_style("white"))
+```
+
+
+
+# Año 2000
+
+row{data-height=65}
+-----------------------
+
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE, include=FALSE}
+base_espacial_00 <-st_read("data/Mapa_de_grado_de_marginacion_por_entidad_federativa_2000/IMEF_2000/IMEF_2000.shp")
+```
+
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+selectInput("poligonos", label="Colorear por:", choices = names(base_espacial_00))
+
+```
+
+
+row {height=1000}
+-------------------------------------------------------------------------------------------
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+renderPlot(tm_shape(base_espacial_00)+
+  tm_polygons(input$poligonos)+
+  tmap_style("white"))
+```
+
+
+
+
+# Año 2015
+
+
+row{data-height=65}
+-----------------------
+
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE, include=FALSE}
+base_espacial_15 <-st_read("data/Mapa_de_grado_de_marginacion_por_municipio_2015/IMM_2015/IMM_2015.shp")
+```
+
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+selectInput("poligonos", label="Colorear por:", choices = names(base_espacial_15))
+
+```
+
+
+row {height=1000}
+-------------------------------------------------------------------------------------------
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+renderPlot(tm_shape(base_espacial_15)+
+  tm_polygons(input$poligonos)+
+  tmap_style("white"))
+```
