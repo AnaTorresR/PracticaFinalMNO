@@ -109,91 +109,6 @@ Este producto de matrices nos dará la matriz de componentes principales siendo 
 
 ---
 
-# Clústering
-
-El aprendizaje no supervisado es un tipo de algoritmo de aprendizaje de máquina usado para extraer inferencias de set de datos carentes de etiquetas respuesta.
-
-```{r echo=FALSE,fig.align='left',fig.align='left', out.width="200px", out.height="150px"}
-
-#knitr::include_graphics("https://media.giphy.com/media/SSirUu2TrV65ymCi4J/giphy.gif")
-```
-
-```{r echo=FALSE,fig.align='center',fig.align='center', out.width="200px", out.height="150px"}
-
-knitr::include_graphics("https://media.giphy.com/media/3o6MbbwX2g2GA4MUus/giphy.gif")
-```
-
-El clústering tiene como objetivo clasificar observaciones en múltiples grupos basados en su similaridad bajo una métrica específica.
-
-```{r echo=FALSE,fig.align='center',fig.align='center', out.width="200px", out.height="150px"}
-
-knitr::include_graphics("https://media.giphy.com/media/VduFvPwm3gfGO8duNN/giphy.gif")
-```
-
----
-
-# K-medias
-
-El método de $K$-medias para clasificar datos puede ser expresado de la siguiente manera:
-
-```{r echo=FALSE,fig.align='center',fig.align='center', out.width="500px", out.height="100px"}
-
-knitr::include_graphics("img/expresion_kmeans.png")
-```
-
-- Donde:
-    - $C_k$: se refiere a los $K$ clusters.
-    - $\mu_k$: se refiere a los $K$ centroides.
-    - $x$: se refiere a los $N$ datos que se clasificarán.
-
-```{r echo=FALSE,fig.align='center',fig.align='center', out.width="250px", out.height="225px"}
-
-knitr::include_graphics("https://thumbs.gfycat.com/SoftEnragedHypsilophodon-size_restricted.gif")
-```
-
----
-
-## Algoritmo
-
-- En términos simplificados, el algoritmo de k-medias se podría simplificar en:
-    1. Indicar número de clusters a sacar.
-    2. Inicializar centroides.
-    3. Asignar observación a su centroide más cercano.
-    4. Actualiza los centroides y calcula las nuevas distancias.
-    5. Repite los pasos 3 y 4 hasta que no haya cambios significativos o alcances un número máximo de iteraciones.
-    
-    ```{r echo=FALSE,fig.align='center',fig.align='center', out.width="300px", out.height="300px"}
-
-knitr::include_graphics("https://upload.wikimedia.org/wikipedia/commons/a/a7/Em_old_faithful.gif")
-```
-
----
-
-## Ventajas y desventajas
-
-```{r echo=FALSE,fig.align='left',fig.align='left', out.width="150px", out.height="125px"}
-
-knitr::include_graphics("https://media.giphy.com/media/xUySTHl2WMBJjqD8NW/giphy.gif")
-```
-
-- Fortalezas
-    1. Algoritmo simple y rápido
-    2. Altamente escalable
-
-
-```{r echo=FALSE,fig.align='left',fig.align='left', out.width="150px", out.height="125px"}
-
-knitr::include_graphics("https://tenor.com/view/beating-mr-burns-bat-smoking-gif-14764352.gif")
-```
-
-- Debilidades
-    1. Asume conocimiento previo de los datos.
-    2. Sensible a valores atípicos
-    3. La inicialización de centroides puede tener un gran impacto.
-    4. Diferente reacomodo de datos puede dar resultados diferentes.
-
----
-
 # Año 1990 
 
 
@@ -303,3 +218,240 @@ kable(pca[1:10,])
 ```{r echo=FALSE,fig.align='center',fig.align='center', fig.height=2}
 knitr::include_graphics("img/pca_2015.png")
 ```
+
+---
+
+# Clústering
+
+El aprendizaje no supervisado es un tipo de algoritmo de aprendizaje de máquina usado para extraer inferencias de set de datos carentes de etiquetas respuesta.
+
+```{r echo=FALSE,fig.align='left',fig.align='left', out.width="200px", out.height="150px"}
+
+#knitr::include_graphics("https://media.giphy.com/media/SSirUu2TrV65ymCi4J/giphy.gif")
+```
+
+```{r echo=FALSE,fig.align='center',fig.align='center', out.width="200px", out.height="150px"}
+
+knitr::include_graphics("https://media.giphy.com/media/3o6MbbwX2g2GA4MUus/giphy.gif")
+```
+
+El clústering tiene como objetivo clasificar observaciones en múltiples grupos basados en su similaridad bajo una métrica específica.
+
+```{r echo=FALSE,fig.align='center',fig.align='center', out.width="200px", out.height="150px"}
+
+knitr::include_graphics("https://media.giphy.com/media/VduFvPwm3gfGO8duNN/giphy.gif")
+```
+
+
+---
+
+# K-medias
+
+El método de $K$-medias para clasificar datos puede ser expresado de la siguiente manera:
+
+```{r echo=FALSE,fig.align='center',fig.align='center', out.width="500px", out.height="100px"}
+
+knitr::include_graphics("img/expresion_kmeans.png")
+```
+
+- Donde:
+    - $C_k$: se refiere a los $K$ clusters.
+    - $\mu_k$: se refiere a los $K$ centroides.
+    - $x$: se refiere a los $N$ datos que se clasificarán.
+
+```{r echo=FALSE,fig.align='center',fig.align='center', out.width="250px", out.height="225px"}
+
+knitr::include_graphics("https://thumbs.gfycat.com/SoftEnragedHypsilophodon-size_restricted.gif")
+```
+
+---
+
+## Algoritmo
+
+- En términos simplificados, el algoritmo de k-medias se podría simplificar en:
+    1. Indicar número de clusters a sacar.
+    2. Inicializar centroides.
+    3. Asignar observación a su centroide más cercano.
+    4. Actualiza los centroides y calcula las nuevas distancias.
+    5. Repite los pasos 3 y 4 hasta que no haya cambios significativos o alcances un número máximo de iteraciones.
+    
+    ```{r echo=FALSE,fig.align='center',fig.align='center', out.width="400px", out.height="300px"}
+
+knitr::include_graphics("https://en.wikitolearn.org/images/en/0/0d/Animation_of_k-means_clustering.gif")
+```
+
+---
+
+## Ventajas y desventajas
+
+```{r echo=FALSE,fig.align='left',fig.align='left', out.width="150px", out.height="125px"}
+
+knitr::include_graphics("https://media.giphy.com/media/xUySTHl2WMBJjqD8NW/giphy.gif")
+```
+
+- Fortalezas
+    1. Algoritmo simple y rápido
+    2. Altamente escalable
+
+
+```{r echo=FALSE,fig.align='left',fig.align='left', out.width="150px", out.height="125px"}
+
+knitr::include_graphics("https://tenor.com/view/beating-mr-burns-bat-smoking-gif-14764352.gif")
+```
+
+- Debilidades
+    1. Asume conocimiento previo de los datos.
+    2. Sensible a valores atípicos
+    3. La inicialización de centroides puede tener un gran impacto.
+    4. Diferente reacomodo de datos puede dar resultados diferentes.
+
+---
+
+# Resultados finales - 1990
+
+```{r echo=FALSE,fig.align='center',fig.align='center', out.width="400px", out.height="200px"}
+
+knitr::include_graphics("images/1990/1990_base_classif.png")
+
+```
+
+.pull-left[
+```{r echo=FALSE,fig.align='left',fig.align='left', out.width="450px", out.height="225px"}
+
+knitr::include_graphics("images/1990/1990_feature_classif.png")
+
+```
+]
+
+.pull-right[
+```{r echo=FALSE,fig.align='right',fig.align='right', out.width="450px", out.height="225px"}
+
+knitr::include_graphics("images/1990/1990_pca_classif.png")
+
+```
+]
+
+---
+
+# Matriz de confusión - 1990
+
+.pull-left[
+```{r echo=FALSE,fig.align='left',fig.align='left', out.width="450px", out.height="300px"}
+
+knitr::include_graphics("images/1990/1990_feature_cm.png")
+
+```
+]
+
+.pull-right[
+```{r echo=FALSE,fig.align='right',fig.align='right', out.width="450px", out.height="300px"}
+
+knitr::include_graphics("images/1990/1990_pca_cm.png")
+
+```
+]
+
+---
+
+# Resultados finales - 2000
+
+```{r echo=FALSE,fig.align='center',fig.align='center', out.width="400px", out.height="200px"}
+
+knitr::include_graphics("images/2000/2000_base_classif.png")
+
+```
+
+.pull-left[
+```{r echo=FALSE,fig.align='left',fig.align='left', out.width="600px", out.height="225px"}
+
+knitr::include_graphics("images/2000/2000_feature_classif.png")
+
+```
+]
+
+.pull-right[
+```{r echo=FALSE,fig.align='right',fig.align='right', out.width="600px", out.height="225px"}
+
+knitr::include_graphics("images/2000/2000_pca_classif.png")
+
+```
+]
+
+
+---
+
+# Matriz de confusión - 2000
+
+.pull-left[
+```{r echo=FALSE,fig.align='left',fig.align='left', out.width="450px", out.height="300px"}
+
+knitr::include_graphics("images/2000/2000_feature_cm.png")
+
+```
+]
+
+.pull-right[
+```{r echo=FALSE,fig.align='right',fig.align='right', out.width="450px", out.height="300px"}
+
+knitr::include_graphics("images/2000/2000_pca_cm.png")
+
+```
+]
+
+---
+
+# Resultados finales - 2010
+
+```{r echo=FALSE,fig.align='center',fig.align='center', out.width="400px", out.height="200px"}
+
+knitr::include_graphics("images/2010/2010_base_classif.png")
+
+```
+
+.pull-left[
+```{r echo=FALSE,fig.align='left',fig.align='left', out.width="600px", out.height="225px"}
+
+knitr::include_graphics("images/2010/2010_feature_classif.png")
+
+```
+]
+
+.pull-right[
+```{r echo=FALSE,fig.align='right',fig.align='right', out.width="600px", out.height="225px"}
+
+knitr::include_graphics("images/2010/2010_pca_classif.png")
+
+```
+]
+
+---
+
+# Matriz de confusión - 2010
+
+.pull-left[
+```{r echo=FALSE,fig.align='left',fig.align='left', out.width="450px", out.height="300px"}
+
+knitr::include_graphics("images/2010/2010_feature_cm.png")
+
+```
+]
+
+.pull-right[
+```{r echo=FALSE,fig.align='right',fig.align='right', out.width="450px", out.height="300px"}
+
+knitr::include_graphics("images/2010/2010_pca_cm.png")
+
+```
+]
+
+---
+
+# Conclusiones finales
+
+- Los primeros dos componentes principales explicaron aproximadamente el 80% de la varianza.
+
+- El método de clústering logró un desempeño similar al usar los atributos originales y los derivados del PCA. 
+
+- Los componentes principales reducieron la dimensionalidad de los datos casi en un 50% sin comprometer mucho las agrupaciones.
+
+- Las mayores dificultades del algoritmo $K$-medias se presentaron al clasificar los estados con nivel de marginación "medio" y "alto".

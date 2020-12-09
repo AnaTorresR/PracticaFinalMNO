@@ -591,7 +591,7 @@ Analysis. Second Edition. Volumen 2. Springer.
 
 - Huu Le, Anders Eriksson, Thanh-Toan Do, Michael Milford (2018), A Binary Optimization Approach for Constrained K-Means Clustering, Cornell University, https://arxiv.org/abs/1810.10134v2.
 
--The Data Science Lab (2013), Clustering With K-Means in Python, https://datasciencelab.wordpress.com/2013/12/12/clustering-with-k-means-in-python/.
+- The Data Science Lab (2013), Clustering With K-Means in Python, https://datasciencelab.wordpress.com/2013/12/12/clustering-with-k-means-in-python/.
 
 - David Arthur and Sergei Vassilvitskii (2016), Stanford University, http://ilpubs.stanford.edu:8090/778/1/2006-13.pdf.
 
