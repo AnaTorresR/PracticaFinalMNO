@@ -1,0 +1,1253 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Creación de índice con PCA</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Equipo 3" />
+    <meta name="date" content="2020-12-08" />
+    <script src="libs/header-attrs-2.5/header-attrs.js"></script>
+    <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/default-fonts.css" rel="stylesheet" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Creación de índice con PCA
+## Método Jacobi y K-medias
+### Equipo 3
+### ITAM
+### 2020-12-08
+
+---
+
+
+- Exposición: Roberto Pérez, Iván Salgado
+               
+- Responder preguntas: Ana Torres
+
+- Hacer preguntas: Carlos López
+
+
+# Introducción
+
+Usamos análisis de componentes principales para reducir la dimensión de los `\(9\)` indicadores socioeconómicos que forman al índice de marginación de los años 1990, 2000 y 2015. Para realizar esta reducción de dimensiones  utilizamos el método de rotaciones de Jacobi para matrices simétricas. Una vez obtenida la reducción de dimensiones recreamos el índice de marginación del Consejo Nacional de la Población con el primer componente principal. Además se realizarán agrupaciones por el método de k-medias con las variables originales y las obtenidas por el método de componentes principales.
+
+---
+
+#Índice de marginación
+
+&gt; Desde 1990 el CONAPO emprendió esfuerzos sistemáticos para construir indicadores con el objetivo de         analizar las desventajas sociales de la población e identificar con precisión espacios mayormente           marginados, diferenciándolos según su intensidad de carencias, el resultado fue el índice de                marginación.
+
+El indice de marginación es un parámetro estadístico que contribuye a la identificación de sectores del país que carecen de oportunidades para su desarrollo y de la capacidad para encontrarlas o generarlas.
+
+&lt;img src="img/CONAPO.JPEG" width="513" style="display: block; margin: auto;" /&gt;
+
+---
+
+## Indicadores socioeconómicos del índice de marginación
+
+- Educación:
+
+    - Porcentaje de población analfabeta
+
+    - Porcentaje de población sin primaria completa
+
+- Vivienda:
+
+    - Porcentaje de ocupantes en viviendas sin agua entubada
+
+    - Porcentaje de ocupantes en viviendas sin drenaje ni servicio sanitario exclusivo
+
+    - Porcentaje de ocupantes en viviendas sin drenaje ni excusado
+
+    - Porcentaje de ocupantes en viviendas con algún nivel de hacinamiento
+
+    - Porcentaje de ocupantes en viviendas sin energía eléctrica
+
+    - Porcentaje de ocupantes en viviendas con piso de tierra
+
+---
+
+- Distribución de la población:
+
+    - Porcentaje de población en localidades con menos de 5,000 habitantes
+
+- Ingresos:
+
+    - Porcentaje de población ocupada con ingresos de hasta dos salarios mínimos
+
+---
+
+# Análisis de componentes principales
+
+Es un método de reducción de dimensiones. Supóngase que existe una muestra con n individuos cada uno con `\(p\)` variables `\((X_1, X_2, …, X_p)\)`, es decir, el espacio muestral tiene `\(p\)` dimensiones. PCA permite encontrar un número de factores subyacentes `\((z&lt;p)\)` que explican aproximadamente lo mismo que las `\(p\)` variables originales. Cada una de estas `\(z\)` nuevas variables recibe el nombre de componente principal.
+
+El método de PCA permite por lo tanto “condensar” la información aportada por múltiples variables en solo unas pocas componentes. Esto lo convierte en un método muy útil de aplicar previa utilización de otras técnicas estadísticas tales como regresión, clustering, etc..
+
+---
+
+## Construcción de los componentes principales
+
+Cada componente principal se obtiene por combinación lineal de las variables originales. Se pueden entender como nuevas variables obtenidas al hacer una suma ponderada de las variables originales, donde los ponderadores son conocidos como pesos.
+
+Se resuelve un problema de optimización para encontrar el valor de los pesos con los que se maximiza la varianza. Una forma de resolver esta optimización es mediante el cálculo de eigenvectores y eigenvalores de la matriz de covarianzas.
+
+Para calcular los valores y vectores propios de nuestros datos utilizamos el método de rotaciones de Jacobi para matrices simétricas. Implementamos dos funciones, en donde la primera función nos presentaba la matriz de los valores propios en la diagonal y la segunda función nos proporcionaba la matriz de eigenvectores `\(Q_k\)`. 
+
+---
+
+# Implementación
+
+En nuestro caso contamos con `\(9\)` variables correspondientes a los indicadores socioeconómicos. El primer paso que realizamos fue escalar las variables, para después obtener la matriz de varianzas y covarianzas. 
+
+Después utilizamos la función `compute_Jacobi_iterative()` para diagonalizar la matriz de covarianzas y por último utilizamos la función `compute_Jacobi_egvectors()` para obtener la matriz de vectores propios. 
+
+Unas vez utilizado este método, ordenamos los valores propios de mayor a menor para después obtener de manera ordenada la matriz de vectores propios. Posterormente realizamos la multiplicación de la matriz de vectores propios por la matriz de nuestros valores originales (indicadores socioeconómicos) escalados. 
+
+Este producto de matrices nos dará la matriz de componentes principales siendo estos nuestras nuevas variables. 
+
+
+---
+
+# Año 1990 
+
+
+La función  `compute_Jacobi_iterative()` nos da la siguiente matriz:
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:right;"&gt; X0 &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; X1 &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; X2 &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; X3 &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; X4 &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; X5 &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; X6 &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; X7 &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; X8 &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 7.3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 0.0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.036 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 0.0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.118 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 0.0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.611 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 0.0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.09 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 0.0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.325 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 0.0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.233 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 0.0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.145 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 0.0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.431 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+---
+
+## Matriz de componentes principales
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:right;"&gt; PC1 &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; PC2 &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; PC3 &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; PC4 &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; PC5 &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; PC6 &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; PC7 &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; PC8 &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; PC9 &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; -0.808 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.508 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.283 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.355 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.890 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.295 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.372 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -1.767 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -1.391 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; -2.976 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -1.151 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.807 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.547 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -3.213 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.177 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -1.085 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -1.847 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.083 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; -1.650 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -1.095 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.438 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.102 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -1.742 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.088 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.747 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -1.336 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.905 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 0.682 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.269 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.133 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.056 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.062 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.022 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.360 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.720 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.625 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; -1.343 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -1.111 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.292 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.209 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -1.422 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.478 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.356 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -1.722 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -1.110 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; -1.702 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.502 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.456 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -1.206 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -1.215 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.252 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -1.023 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -1.153 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.268 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 2.948 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.676 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.976 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.171 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3.574 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.840 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2.036 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4.103 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.528 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; -1.655 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.526 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.464 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.343 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -1.890 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.318 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.400 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -1.347 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.679 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; -2.238 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -2.323 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.537 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.287 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -2.316 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.444 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.268 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -2.720 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -1.480 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 0.546 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.370 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.562 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.331 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.045 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.859 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.124 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.189 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.861 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+---
+
+## Comparación entre el primer componente y el índice de marginación
+
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; Estado &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; PC1 &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; IM &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; GM &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Aguascalientes &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.808 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.89 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Bajo &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Baja California &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -2.976 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -1.34 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Muy bajo &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Baja California Sur &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -1.650 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.97 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Bajo &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Campeche &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.682 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.48 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Alto &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Coahuila de Zaragoza &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -1.343 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -1.05 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Bajo &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Colima &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -1.702 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.76 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Bajo &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Chiapas &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2.948 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2.36 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Muy alto &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Chihuahua &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -1.655 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.87 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Bajo &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Distrito Federal &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -2.238 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -1.69 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Muy bajo &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Durango &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.546 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.01 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Alto &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+---
+
+## Visualización de dos componentes principales
+
+&lt;img src="img/pca_1990.png" width="1563" style="display: block; margin: auto;" /&gt;
+
+---
+
+# Año 2000
+
+
+La función  `compute_Jacobi_iterative()` nos da la siguiente matriz:
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:right;"&gt; X0 &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; X1 &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; X2 &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; X3 &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; X4 &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; X5 &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; X6 &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; X7 &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; X8 &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 0.037 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7.354 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.651 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.414 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.116 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.298 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.069 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.215 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.136 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+---
+
+## Matriz de componentes principales
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:right;"&gt; PC1 &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; PC2 &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; PC3 &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; PC4 &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; PC5 &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; PC6 &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; PC7 &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; PC8 &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; PC9 &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; -1.005 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -1.215 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.573 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -1.164 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.058 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.187 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.100 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.477 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.250 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; -1.902 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.219 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -1.491 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -1.856 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.265 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.133 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.264 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.834 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.780 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; -1.257 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.014 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.264 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -1.327 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.959 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.964 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.188 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.472 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.361 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; -0.159 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.329 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.780 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.326 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -1.197 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.423 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.609 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.280 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.615 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; -1.641 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.975 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.959 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -1.702 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.941 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.209 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.214 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.714 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.601 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; -0.633 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.780 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.478 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.550 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.324 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.104 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.657 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.712 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.428 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 2.997 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2.369 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.642 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3.339 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -2.216 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -2.267 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.290 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.551 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.287 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; -1.594 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.033 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.342 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.800 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.059 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.121 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.212 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.013 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.527 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; -2.519 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -1.582 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.977 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -1.984 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.917 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.196 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.060 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.625 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.477 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; -0.209 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.142 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.586 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.289 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.811 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.903 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.272 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.027 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.273 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+---
+
+## Comparación entre el primer componente y el índice de marginación
+
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; Estado &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; PC1 &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; IM &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; GM &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Aguascalientes &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -1.005 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.97 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Bajo &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Baja California &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -1.902 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -1.27 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Muy bajo &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Baja California Sur &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -1.257 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.80 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Bajo &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Campeche &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.159 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.70 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Alto &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Coahuila de Zaragoza &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -1.641 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -1.20 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Muy bajo &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Colima &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.633 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.69 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Bajo &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Chiapas &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2.997 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2.25 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Muy alto &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Chihuahua &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -1.594 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.78 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Bajo &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Distrito Federal &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -2.519 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -1.53 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Muy bajo &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Durango &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.209 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.11 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Medio &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+---
+
+## Visualización de dos componentes principales
+
+&lt;img src="img/pca_2000.png" width="1563" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+# Año 2015
+
+La función  `compute_Jacobi_iterative()` nos da la siguiente matriz:
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:right;"&gt; X0 &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; X1 &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; X2 &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; X3 &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; X4 &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; X5 &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; X6 &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; X7 &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; X8 &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 0.031 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6.628 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.756 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.649 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.153 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.198 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.08 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.482 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.314 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+---
+
+## Matriz de componentes principales
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:right;"&gt; PC1 &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; PC2 &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; PC3 &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; PC4 &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; PC5 &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; PC6 &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; PC7 &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; PC8 &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; PC9 &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 0.270 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.114 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.261 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -1.613 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.324 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.846 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -1.391 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.568 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.290 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; -0.335 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.960 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -1.055 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -1.758 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.792 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.626 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -1.423 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.091 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.652 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; -0.653 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -1.395 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -1.212 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.916 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.827 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.286 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.266 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.324 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.042 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; -0.778 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.424 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.528 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.182 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.020 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.123 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.655 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.498 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.481 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; -0.259 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.628 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.688 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -1.726 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.811 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.667 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -1.554 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.304 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.802 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; -0.287 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.037 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.729 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -1.351 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.138 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.004 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -1.317 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.092 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.426 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; -0.084 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2.235 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.304 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3.807 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -1.097 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2.119 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3.455 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.362 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -1.884 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; -0.281 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.965 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.243 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.200 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.356 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.785 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -1.642 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.002 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.457 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 0.010 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.938 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.980 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -2.138 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.361 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.530 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -2.333 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.602 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.821 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; -0.222 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -1.289 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.566 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.912 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.562 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.802 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.635 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.151 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.977 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+---
+
+## Comparación entre el primer componente y el índice de marginación
+
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; Estado &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; PC1 &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; IM &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; GM &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Aguascalientes &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.270 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.89 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Bajo &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Baja California &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.335 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -1.10 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Muy bajo &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Baja California Sur &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.653 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.60 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Bajo &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Campeche &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.778 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.46 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Alto &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Coahuila de Zaragoza &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.259 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -1.10 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Muy bajo &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Colima &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.287 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.73 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Bajo &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Chiapas &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.084 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2.41 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Muy alto &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Chihuahua &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.281 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.60 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Bajo &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Distrito Federal &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.010 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -1.45 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Muy bajo &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Durango &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.222 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.05 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Medio &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+---
+
+## Visualización de dos componentes principales
+
+&lt;img src="img/pca_2015.png" width="1563" style="display: block; margin: auto;" /&gt;
+
+---
+
+# K-medias
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
