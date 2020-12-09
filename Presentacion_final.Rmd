@@ -333,6 +333,26 @@ knitr::include_graphics("images/1990/1990_pca_classif.png")
 
 ---
 
+# Matriz de confusión - 1990
+
+.pull-left[
+```{r echo=FALSE,fig.align='left',fig.align='left', out.width="450px", out.height="300px"}
+
+knitr::include_graphics("images/1990/1990_feature_cm.png")
+
+```
+]
+
+.pull-right[
+```{r echo=FALSE,fig.align='right',fig.align='right', out.width="450px", out.height="300px"}
+
+knitr::include_graphics("images/1990/1990_pca_cm.png")
+
+```
+]
+
+---
+
 # Resultados finales - 2000
 
 ```{r echo=FALSE,fig.align='center',fig.align='center', out.width="400px", out.height="200px"}
@@ -353,6 +373,27 @@ knitr::include_graphics("images/2000/2000_feature_classif.png")
 ```{r echo=FALSE,fig.align='right',fig.align='right', out.width="600px", out.height="225px"}
 
 knitr::include_graphics("images/2000/2000_pca_classif.png")
+
+```
+]
+
+
+---
+
+# Matriz de confusión - 2000
+
+.pull-left[
+```{r echo=FALSE,fig.align='left',fig.align='left', out.width="450px", out.height="300px"}
+
+knitr::include_graphics("images/2000/2000_feature_cm.png")
+
+```
+]
+
+.pull-right[
+```{r echo=FALSE,fig.align='right',fig.align='right', out.width="450px", out.height="300px"}
+
+knitr::include_graphics("images/2000/2000_pca_cm.png")
 
 ```
 ]
@@ -379,46 +420,6 @@ knitr::include_graphics("images/2010/2010_feature_classif.png")
 ```{r echo=FALSE,fig.align='right',fig.align='right', out.width="600px", out.height="225px"}
 
 knitr::include_graphics("images/2010/2010_pca_classif.png")
-
-```
-]
-
----
-
-# Matriz de confusión - 1990
-
-.pull-left[
-```{r echo=FALSE,fig.align='left',fig.align='left', out.width="450px", out.height="300px"}
-
-knitr::include_graphics("images/1990/1990_feature_cm.png")
-
-```
-]
-
-.pull-right[
-```{r echo=FALSE,fig.align='right',fig.align='right', out.width="450px", out.height="300px"}
-
-knitr::include_graphics("images/1990/1990_pca_cm.png")
-
-```
-]
-
----
-
-# Matriz de confusión - 2000
-
-.pull-left[
-```{r echo=FALSE,fig.align='left',fig.align='left', out.width="450px", out.height="300px"}
-
-knitr::include_graphics("images/2000/2000_feature_cm.png")
-
-```
-]
-
-.pull-right[
-```{r echo=FALSE,fig.align='right',fig.align='right', out.width="450px", out.height="300px"}
-
-knitr::include_graphics("images/2000/2000_pca_cm.png")
 
 ```
 ]
