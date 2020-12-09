@@ -275,9 +275,9 @@ knitr::include_graphics("https://thumbs.gfycat.com/SoftEnragedHypsilophodon-size
     4. Actualiza los centroides y calcula las nuevas distancias.
     5. Repite los pasos 3 y 4 hasta que no haya cambios significativos o alcances un número máximo de iteraciones.
     
-    ```{r echo=FALSE,fig.align='center',fig.align='center', out.width="300px", out.height="300px"}
+    ```{r echo=FALSE,fig.align='center',fig.align='center', out.width="400px", out.height="300px"}
 
-knitr::include_graphics("https://upload.wikimedia.org/wikipedia/commons/a/a7/Em_old_faithful.gif")
+knitr::include_graphics("https://en.wikitolearn.org/images/en/0/0d/Animation_of_k-means_clustering.gif")
 ```
 
 ---
@@ -445,7 +445,7 @@ knitr::include_graphics("images/2010/2010_pca_cm.png")
 
 ---
 
-# Conclusiones acerca de los resultados
+# Conclusiones finales
 
 - Los primeros dos componentes principales explicaron aproximadamente el 80% de la varianza.
 
