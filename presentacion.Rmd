@@ -12,6 +12,12 @@ output:
       highlightLines: true
       countIncrementalSlides: false
 ---
+```{r, echo=FALSE, message=FALSE, include=FALSE, warning=FALSE}
+require(xaringan)
+require(tibble)
+require(kableExtra)
+```
+
 
 - Exposición: Roberto Pérez, Iván Salgado
                
@@ -33,6 +39,7 @@ Usamos análisis de componentes principales para reducir la dimensión de los $9
 El indice de marginación es un parámetro estadístico que contribuye a la identificación de sectores del país que carecen de oportunidades para su desarrollo y de la capacidad para encontrarlas o generarlas.
 
 ```{r echo=FALSE,fig.align='center',fig.align='center', fig.height=2}
+
 knitr::include_graphics("img/CONAPO.JPEG")
 ```
 
@@ -109,8 +116,7 @@ Este producto de matrices nos dará la matriz de componentes principales siendo 
 La función  `compute_Jacobi_iterative()` nos da la siguiente matriz:
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
-library(tibble)
-library(kableExtra)
+
 kable(tibble(read.csv("data/Diagonal_1990.csv")))
 ```
 
