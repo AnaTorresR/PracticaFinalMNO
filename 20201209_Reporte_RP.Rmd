@@ -140,7 +140,7 @@ $K$-medias es uno de los algoritmos no supervisados de clústering más popular 
 
 La idea básica detrás de $k$-medias consiste en definir grupos de tal forma que la variación total dentro de cada grupo (conocida como variación total entre clusters) se minimice.
 
-El método de $K$-medias corresponde a un problema de optimización no-convexo. Dado suficiente tiempo, el método en cuestión tenderá a converger, a pesar de que sea solo a un mínimo local y sus resultados son altamente dependientes de la inicialización de los centroides. El algoritmo de $k$-medias toma un set de datos $X$ compuesto por $N$ puntos como input, así como un parámetro $K$ que especifica el número de clusters a crear. La condición matemática para los $K$ clusters $C_k$ y los $K$ centroides $\mu_k$ se puede expresar de la siguiente manera:
+El método de $K$-medias corresponde a un problema de optimización no-convexo. Dado suficiente tiempo, el método en cuestión tenderá a converger, a pesar de que sea solo a un mínimo local y sus resultados son altamente dependientes de la inicialización de los centroides. El algoritmo de $k$-medias toma un set de datos $X$ compuesto por $N$ puntos como input, así como un parámetro $K$ que especifica el número de clusters a crear. La condición matemática para los $N$ clusters $C_k$ y los $K$ centroides $\mu_k$ se puede expresar de la siguiente manera:
 
 $$ \text{Minimizar } \sum_{k=1} \sum_{\mathrm{x}_n \in C_k} ||\mathrm{x}_n - \mu_k||^2 \text{ con respecto a } C_k \text{ y } \mu_k  $$
 
@@ -265,28 +265,31 @@ Una vez realizados los sweeps obtenemos la matriz A diagonalizada, en esta matri
 
 Para obtener la matriz de vectores propios utilizamos la siguiente función:
 
-    def compute_Jacobi_egvectors(A, sweeps):
-        """
-        Compute Jacobi rotation matrix.
-        Args:
+    def compute_Jacobi_eigenvectors(A, tol, max_sweeps):
+    """
+    Compute Jacobi rotation matrix.
+    Args:
         Ak (numpy ndarray): Matrix of iteration k in Jacobi rotation method.
         idx1 (int): index for rows in Jacobi rotation matrix.
         idx2 (int): index for columns in Jacobi rotation matrix.
-        Returns:
-        Qk (numpy ndarray): Eigenvectors
-        """
-        m,n = A.shape
-        Q = np.eye(m)
-        for n in range(sweeps):
-            for i in range(A.shape[0]):
-                j = i + 1
-            for m in range(A.shape[0]-i-1):
-                if off(A) > (1e-8)*np.linalg.norm(A):
-                    J = compute_Jacobi_rotation(A, i, j)
-                    Qk = Q@J
-                    Q = Qk
-                    j += 1
-      return Qk
+    Returns:
+        Q (numpy ndarray): Matrix that contain A's eigenvectors.
+    """
+    A_k = A.copy()
+    m,n = A_k.shape
+    Q = np.eye(m)
+    sweeps = 0
+    while (off(A_k) > tol*np.linalg.norm(A_k) and sweeps < max_sweeps + 1):
+        sweeps += 1
+        for i in range(A_k.shape[0]):
+            j = i + 1
+            for m in range(A_k.shape[0]-i-1):
+                J = compute_Jacobi_rotation(A_k, i, j)
+                A_k = J.T@A_k@J
+                Q = Q @ J
+                j += 1
+                
+    return Q    
 
 
 Lo siguiente que realizamos fue ordenar de manera descendente los valores propios, de tal forma que la matriz de vectores propios contenga el vector propio cuyo valor propio es el más alto, y así sucesivamente.
