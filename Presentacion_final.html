@@ -111,67 +111,6 @@ Este producto de matrices nos dará la matriz de componentes principales siendo 
 
 ---
 
-# Clústering
-
-El aprendizaje no supervisado es un tipo de algoritmo de aprendizaje de máquina usado para extraer inferencias de set de datos carentes de etiquetas respuesta.
-
-
-
-&lt;img src="https://media.giphy.com/media/3o6MbbwX2g2GA4MUus/giphy.gif" width="200px" height="150px" style="display: block; margin: auto;" /&gt;
-
-El clústering tiene como objetivo clasificar observaciones en múltiples grupos basados en su similaridad bajo una métrica específica.
-
-&lt;img src="https://media.giphy.com/media/VduFvPwm3gfGO8duNN/giphy.gif" width="200px" height="150px" style="display: block; margin: auto;" /&gt;
-
----
-
-# K-medias
-
-El método de `\(K\)`-medias para clasificar datos puede ser expresado de la siguiente manera:
-
-&lt;img src="img/expresion_kmeans.png" width="500px" height="100px" style="display: block; margin: auto;" /&gt;
-
-- Donde:
-    - `\(C_k\)`: se refiere a los `\(K\)` clusters.
-    - `\(\mu_k\)`: se refiere a los `\(K\)` centroides.
-    - `\(x\)`: se refiere a los `\(N\)` datos que se clasificarán.
-
-&lt;img src="https://thumbs.gfycat.com/SoftEnragedHypsilophodon-size_restricted.gif" width="250px" height="225px" style="display: block; margin: auto;" /&gt;
-
----
-
-## Algoritmo
-
-- En términos simplificados, el algoritmo de k-medias se podría simplificar en:
-    1. Indicar número de clusters a sacar.
-    2. Inicializar centroides.
-    3. Asignar observación a su centroide más cercano.
-    4. Actualiza los centroides y calcula las nuevas distancias.
-    5. Repite los pasos 3 y 4 hasta que no haya cambios significativos o alcances un número máximo de iteraciones.
-    
-    &lt;img src="https://upload.wikimedia.org/wikipedia/commons/a/a7/Em_old_faithful.gif" width="300px" height="300px" style="display: block; margin: auto;" /&gt;
-
----
-
-## Ventajas y desventajas
-
-&lt;img src="https://media.giphy.com/media/xUySTHl2WMBJjqD8NW/giphy.gif" width="150px" height="125px" style="display: block; margin: auto auto auto 0;" /&gt;
-
-- Fortalezas
-    1. Algoritmo simple y rápido
-    2. Altamente escalable
-
-
-&lt;img src="https://tenor.com/view/beating-mr-burns-bat-smoking-gif-14764352.gif" width="150px" height="125px" style="display: block; margin: auto auto auto 0;" /&gt;
-
-- Debilidades
-    1. Asume conocimiento previo de los datos.
-    2. Sensible a valores atípicos
-    3. La inicialización de centroides puede tener un gran impacto.
-    4. Diferente reacomodo de datos puede dar resultados diferentes.
-
----
-
 # Año 1990 
 
 
@@ -1186,6 +1125,158 @@ La función  `compute_Jacobi_iterative()` nos da la siguiente matriz:
 ## Visualización de dos componentes principales
 
 &lt;img src="img/pca_2015.png" width="1563" style="display: block; margin: auto;" /&gt;
+
+---
+
+# Clústering
+
+El aprendizaje no supervisado es un tipo de algoritmo de aprendizaje de máquina usado para extraer inferencias de set de datos carentes de etiquetas respuesta.
+
+
+
+&lt;img src="https://media.giphy.com/media/3o6MbbwX2g2GA4MUus/giphy.gif" width="200px" height="150px" style="display: block; margin: auto;" /&gt;
+
+El clústering tiene como objetivo clasificar observaciones en múltiples grupos basados en su similaridad bajo una métrica específica.
+
+&lt;img src="https://media.giphy.com/media/VduFvPwm3gfGO8duNN/giphy.gif" width="200px" height="150px" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+# K-medias
+
+El método de `\(K\)`-medias para clasificar datos puede ser expresado de la siguiente manera:
+
+&lt;img src="img/expresion_kmeans.png" width="500px" height="100px" style="display: block; margin: auto;" /&gt;
+
+- Donde:
+    - `\(C_k\)`: se refiere a los `\(K\)` clusters.
+    - `\(\mu_k\)`: se refiere a los `\(K\)` centroides.
+    - `\(x\)`: se refiere a los `\(N\)` datos que se clasificarán.
+
+&lt;img src="https://thumbs.gfycat.com/SoftEnragedHypsilophodon-size_restricted.gif" width="250px" height="225px" style="display: block; margin: auto;" /&gt;
+
+---
+
+## Algoritmo
+
+- En términos simplificados, el algoritmo de k-medias se podría simplificar en:
+    1. Indicar número de clusters a sacar.
+    2. Inicializar centroides.
+    3. Asignar observación a su centroide más cercano.
+    4. Actualiza los centroides y calcula las nuevas distancias.
+    5. Repite los pasos 3 y 4 hasta que no haya cambios significativos o alcances un número máximo de iteraciones.
+    
+    &lt;img src="https://upload.wikimedia.org/wikipedia/commons/a/a7/Em_old_faithful.gif" width="300px" height="300px" style="display: block; margin: auto;" /&gt;
+
+---
+
+## Ventajas y desventajas
+
+&lt;img src="https://media.giphy.com/media/xUySTHl2WMBJjqD8NW/giphy.gif" width="150px" height="125px" style="display: block; margin: auto auto auto 0;" /&gt;
+
+- Fortalezas
+    1. Algoritmo simple y rápido
+    2. Altamente escalable
+
+
+&lt;img src="https://tenor.com/view/beating-mr-burns-bat-smoking-gif-14764352.gif" width="150px" height="125px" style="display: block; margin: auto auto auto 0;" /&gt;
+
+- Debilidades
+    1. Asume conocimiento previo de los datos.
+    2. Sensible a valores atípicos
+    3. La inicialización de centroides puede tener un gran impacto.
+    4. Diferente reacomodo de datos puede dar resultados diferentes.
+
+---
+
+# Resultados finales - 1990
+
+&lt;img src="images/1990/1990_base_classif.png" width="400px" height="200px" style="display: block; margin: auto;" /&gt;
+
+.pull-left[
+&lt;img src="images/1990/1990_feature_classif.png" width="450px" height="225px" style="display: block; margin: auto auto auto 0;" /&gt;
+]
+
+.pull-right[
+&lt;img src="images/1990/1990_pca_classif.png" width="450px" height="225px" style="display: block; margin: auto 0 auto auto;" /&gt;
+]
+
+---
+
+# Resultados finales - 2000
+
+&lt;img src="images/2000/2000_base_classif.png" width="400px" height="200px" style="display: block; margin: auto;" /&gt;
+
+.pull-left[
+&lt;img src="images/2000/2000_feature_classif.png" width="600px" height="225px" style="display: block; margin: auto auto auto 0;" /&gt;
+]
+
+.pull-right[
+&lt;img src="images/2000/2000_pca_classif.png" width="600px" height="225px" style="display: block; margin: auto 0 auto auto;" /&gt;
+]
+
+---
+
+# Resultados finales - 2010
+
+&lt;img src="images/2010/2010_base_classif.png" width="400px" height="200px" style="display: block; margin: auto;" /&gt;
+
+.pull-left[
+&lt;img src="images/2010/2010_feature_classif.png" width="600px" height="225px" style="display: block; margin: auto auto auto 0;" /&gt;
+]
+
+.pull-right[
+&lt;img src="images/2010/2010_pca_classif.png" width="600px" height="225px" style="display: block; margin: auto 0 auto auto;" /&gt;
+]
+
+---
+
+# Matriz de confusión - 1990
+
+.pull-left[
+&lt;img src="images/1990/1990_feature_cm.png" width="450px" height="300px" style="display: block; margin: auto auto auto 0;" /&gt;
+]
+
+.pull-right[
+&lt;img src="images/1990/1990_pca_cm.png" width="450px" height="300px" style="display: block; margin: auto 0 auto auto;" /&gt;
+]
+
+---
+
+# Matriz de confusión - 2000
+
+.pull-left[
+&lt;img src="images/2000/2000_feature_cm.png" width="450px" height="300px" style="display: block; margin: auto auto auto 0;" /&gt;
+]
+
+.pull-right[
+&lt;img src="images/2000/2000_pca_cm.png" width="450px" height="300px" style="display: block; margin: auto 0 auto auto;" /&gt;
+]
+
+---
+
+# Matriz de confusión - 2010
+
+.pull-left[
+&lt;img src="images/2010/2010_feature_cm.png" width="450px" height="300px" style="display: block; margin: auto auto auto 0;" /&gt;
+]
+
+.pull-right[
+&lt;img src="images/2010/2010_pca_cm.png" width="450px" height="300px" style="display: block; margin: auto 0 auto auto;" /&gt;
+]
+
+---
+
+# Conclusiones acerca de los resultados
+
+- Los primeros dos componentes principales explicaron aproximadamente el 80% de la varianza.
+
+- El método de clústering logró un desempeño similar al usar los atributos originales y los derivados del PCA. 
+
+- Los componentes principales reducieron la dimensionalidad de los datos casi en un 50% sin comprometer mucho las agrupaciones.
+
+- Las mayores dificultades del algoritmo `\(K\)`-medias se presentaron al clasificar los estados con nivel de marginación "medio" y "alto". Los casos extremos de marginación 
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
